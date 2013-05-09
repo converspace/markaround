@@ -44,6 +44,10 @@ A better Markdown (at least for me) with consistence linking, content embeding, 
 * http://tantek.pbworks.com/w/page/59905776/Markdown
 * http://c2.com/cgi/wiki?WikiDesignPrinciples
 * http://c2.com/cgi/wiki?PrincipalComponentAnalysis
+* http://www.codinghorror.com/blog/2012/10/the-future-of-markdown.html
+* http://www.rumproarious.com/2012/10/29/markdown-the-spec/
+* https://github.com/dcurtis/markdown-mark
+* http://code.google.com/p/pagedown/
 
 
 ## Alternative names
@@ -58,6 +62,6 @@ A better Markdown (at least for me) with consistence linking, content embeding, 
 * expressive
 * pot (plain old text)
 * syntext
-* textmark
-* lightmark
+* textmark (taken)
+* lightmark (taken)
 * plaintax
