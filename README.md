@@ -42,3 +42,21 @@ A better Markdown (at least for me) with consistence linking, content embeding, 
 * http://www.wikicreole.org/wiki/Reasoning
 * https://en.wikipedia.org/wiki/Lightweight_markup_language
 * http://tantek.pbworks.com/w/page/59905776/Markdown
+* http://c2.com/cgi/wiki?WikiDesignPrinciples
+* http://c2.com/cgi/wiki?PrincipalComponentAnalysis
+
+
+## Alternative names
+* Mundane - inspired by the Wiki Design Principle of the same name: A small number of \(irregular\) text conventions will provide access to the most useful page markup
+* markaround
+* markforward
+* markfwd
+* markright
+* markleft
+* markrl (rl = rightleft)
+* expressive
+* pot (plain old text)
+* syntext
+* textmark
+* lightmark
+* plaintax
