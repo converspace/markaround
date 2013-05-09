@@ -1,4 +1,4 @@
-# flowt
+# Markaround
 
 A better Markdown (at least for me) with consistence linking, content embeding, only one way to do something (I'm looking at you Markdown headers, lists, bold, emphasis), github style code blocks for easy copy-paste, header anchors, footer reference and strikethrough (because you always change your mind).
 
@@ -48,7 +48,8 @@ A better Markdown (at least for me) with consistence linking, content embeding, 
 
 ## Alternative names
 * Mundane - inspired by the Wiki Design Principle of the same name: A small number of \(irregular\) text conventions will provide access to the most useful page markup
-* markaround
+* flowt
+* flowtext
 * markforward
 * markfwd
 * markright
