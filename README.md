@@ -35,9 +35,11 @@ A better Markdown (at least for me) with consistence linking, content embeding, 
 
 ## TODO:
 *  linebreaks
-*   nl_to_br
-*   multi-paragraph lists end with \n\n\n
-*   email-style blockquotes are imploded to remove \n
+    * nl_to_br
+    * multi-paragraph lists end with \n\n\n
+    * email-style blockquotes are imploded to remove \n
+* nesting lists
+    * Currently prefering \*\* for second level instead of \t\* and so on.
 
 
 ## References:
