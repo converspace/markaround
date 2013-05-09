@@ -26,7 +26,7 @@ A better Markdown (at least for me) with consistence linking, content embeding, 
       * [^1]: http://link "title"
 * Embed
   * \<img_link>
-  * \<(video|slide)_link> (use oembed)
+  * \<(video|slide)_link> `note: use oembed`
   * \<img_link>\[link_to "title"]
   * \<img_link>\[1]
       * [1]: link_to "title"
