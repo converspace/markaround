@@ -25,12 +25,12 @@ A better Markdown (at least for me) with consistence linking, content embeding, 
     * Some Text \[^1]
       * [^1]: http://link "title"
 * Embed
-  * \<img_link>
-  * \<(video|slide)_link> `note: use oembed`
-  * \<img_link>\[link_to "title"]
-  * \<img_link>\[1]
-      * [1]: link_to "title"
-  * \<img_link “alt text“>\[link “title”]
+  * \<img_url>
+  * \<(video|slide)_url> `note: use oembed`
+  * \<img_url>\[http://link "title"]
+  * \<img_url>\[1]
+      * [1]: http://link "title"
+  * \<img_url “alt text“>\[http://link “title”]
 * \> blockquote
 
 
