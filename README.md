@@ -33,6 +33,11 @@ A better Markdown (at least for me) with consistence linking, content embeding, 
   * {{img_url “alt text“}}\[http://link “title”]
 * \> blockquote
 
+## TODO:
+*  linebreaks
+*   nl_to_br
+*   multi-paragraph lists end with \n\n\n
+*   email-style blockquotes are imploded to remove \n
 
 
 ## References:
