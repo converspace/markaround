@@ -1,6 +1,6 @@
 # Markaround
 
-A better Markdown (at least for me) with consistence linking, content embeding, only one way to do something (I'm looking at you Markdown headers, lists, bold, emphasis), github style code blocks for easy copy-paste, header anchors, footer reference and strikethrough (because you always change your mind).
+A better Markdown (at least for me) with an emphasis on ease of writing (especially inside textareas) and parsing that supports consistence linking, content embeding, only one way to do something (I'm looking at you Markdown headers, lists, bold, emphasis), github style code blocks for easy copy-paste, header anchors, footer references and strikethrough (because you always change your mind).
 
 * \*bold\*
 * \_emphasis\_
@@ -13,6 +13,9 @@ A better Markdown (at least for me) with consistence linking, content embeding, 
     \#\# Header 2  
     ...
 * \* unordered list item 1  
+   \*\* unordered list level 2 child-item 1  
+   \*\*\* unordered list level 3 child-item 1  
+   \*\* unordered list level 2 child-item 2  
     \* unordered list item 2
 * 1\. ordered list item 1  
     2\. ordered list item 2
@@ -36,7 +39,7 @@ A better Markdown (at least for me) with consistence linking, content embeding, 
 ## TODO:
 *  linebreaks
     * nl_to_br
-    * multi-paragraph lists end with \n\n\n
+    * multi-paragraph lists end with \n\n\n, i.e., two empty lines.
     * email-style blockquotes are imploded to remove \n
 * nesting lists
     * Currently prefering \*\* for second level instead of \t\* and so on.
