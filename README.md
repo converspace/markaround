@@ -41,8 +41,7 @@ A better Markdown (at least for me) with an emphasis on ease of writing (especia
     * nl_to_br
     * multi-paragraph lists end with \n\n\n, i.e., two empty lines.
     * email-style blockquotes are imploded to remove \n
-* nesting lists
-    * Currently prefering \*\* for second level instead of \t\* and so on.
+* nesting ordered lists
 
 
 ## References:
