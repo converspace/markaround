@@ -6,7 +6,13 @@ A better Markdown (at least for me) with an emphasis on ease of writing (especia
 * `_emphasis_`
 * `-strikethrough-`
 * `` `inline code` ``
-* ```` ```\nCode Block\n``` ````
+* Code Block 
+<pre>
+\`\`\`
+Some Code 
+More Code
+\`\`\`
+</pre>
 * `= Header 1 {#id}`  
     `== Header 2`  
     `=== Header 3`  
