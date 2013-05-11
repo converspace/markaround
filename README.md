@@ -2,16 +2,19 @@
 
 A better Markdown (at least for me) with an emphasis on ease of writing (especially inside textareas) and parsing that supports consistence linking, content embeding, only one way to do something (I'm looking at you Markdown headers, lists, bold, emphasis), github style code blocks for easy copy-paste, header anchors, footer references and strikethrough (because you always change your mind).
 
-* \*bold\*
-* \_emphasis\_
-* -strikethrough-
-* \`inline code\`
+* `**bold**`
+* `__emphasis__`
+* `--strikethrough--``
+*  `` `inline code` ``
 * \`\`\`  
     code block  
     \`\`\`
-* = Header 1 {#id}  
-    == Header 2  
-    ...
+* `= Header 1 {#id}`  
+    `== Header 2`  
+    `=== Header 3`  
+    `==== Header 4`  
+    `===== Header 5`  
+    `====== Header 6`  
 * \* unordered list item 1  
    \*\* unordered list level 2 child-item 1  
    \*\*\* unordered list level 3 child-item 1  
@@ -24,7 +27,7 @@ A better Markdown (at least for me) with an emphasis on ease of writing (especia
 * Link
     * http://link
     * \[http://link "title"]
-    * \(Link Text)\[http://link]
+    * \(Link Text)\[http://link "Title" .h-card]
     * \(Link Text)\[1]
       * [1]: http://link "title"
     * Some Text \[^1]
@@ -40,9 +43,17 @@ A better Markdown (at least for me) with an emphasis on ease of writing (especia
 
 ## TODO:
 *  linebreaks
-    * nl_to_br
+    * nl_to_br?
+    * \n\n -> \<p\>?
+    * explicit syntax for \<br\>?
     * multi-paragraph lists end with \n\n\n, i.e., two empty lines.
     * email-style blockquotes are imploded to remove \n
+* http://www.wikicreole.org/wiki/Goals
+* http://www.wikicreole.org/wiki/GoodPractices
+* http://www.wikicreole.org/wiki/InvisibleMarkup
+* http://maruku.rubyforge.org/proposal.html
+* https://www.dokuwiki.org/wiki:syntax#footnotes
+* microformats: (Sandeep)[http://sandeep.io "Sandeep Shetty" .h-card]
 
 
 ## References:
