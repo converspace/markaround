@@ -59,7 +59,7 @@ A better Markdown (at least for me) with an emphasis on ease of writing (especia
     * borrow emoticons.
     * See also text to html conversion.
 * microformats: (Sandeep)[http://sandeep.io "Sandeep Shetty" .h-card]
-
+* Backticks http://php.net/manual/en/language.operators.execution.php http://unix.stackexchange.com/questions/48392/understanding-backtick
 
 ## References:
 * http://xkcd.com/927/
