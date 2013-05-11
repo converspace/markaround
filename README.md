@@ -52,7 +52,12 @@ A better Markdown (at least for me) with an emphasis on ease of writing (especia
 * http://www.wikicreole.org/wiki/GoodPractices
 * http://www.wikicreole.org/wiki/InvisibleMarkup
 * http://maruku.rubyforge.org/proposal.html
-* https://www.dokuwiki.org/wiki:syntax#footnotes
+* Metadata syntax to replace trailing tags invisible markup
+* https://www.dokuwiki.org/wiki:syntax
+    * interesting footnotes syntax
+    * Also interesting image alignment syntax.
+    * borrow emoticons.
+    * See also text to html conversion.
 * microformats: (Sandeep)[http://sandeep.io "Sandeep Shetty" .h-card]
 
 
