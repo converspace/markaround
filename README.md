@@ -13,7 +13,7 @@ Some Code
 More Code
 \`\`\`
 </pre>
-* `= Header 1 {#id}`  
+* `= Header 1 {#id .class}`  
     `== Header 2`  
     `=== Header 3`  
     `==== Header 4`  
@@ -46,7 +46,7 @@ More Code
   * `{{img_url “alt text“}}[http://link “title”]`
 * `> blockquote`
 * Span
-    * `((some text here))[#id .class1]`
+    * `((some text here)){#id .class1}`
 
 ## TODO:
 *  linebreaks
