@@ -9,16 +9,18 @@ A better Markdown (at least for me) with an emphasis on ease of writing (especia
 * \`\`\`  
     code block  
     \`\`\`
-* \# Header 1 {#id}  
-    \#\# Header 2  
+* = Header 1 {#id}  
+    == Header 2  
     ...
 * \* unordered list item 1  
    \*\* unordered list level 2 child-item 1  
    \*\*\* unordered list level 3 child-item 1  
    \*\* unordered list level 2 child-item 2  
     \* unordered list item 2
-* 1\. ordered list item 1  
-    2\. ordered list item 2
+* # ordered list item 1  
+        ## ordered list level 2 child-item 1  
+            ### ordered list level 3 child-item 1  
+    # ordered list item 2
 * Link
     * http://link
     * \[http://link "title"]
@@ -41,7 +43,6 @@ A better Markdown (at least for me) with an emphasis on ease of writing (especia
     * nl_to_br
     * multi-paragraph lists end with \n\n\n, i.e., two empty lines.
     * email-style blockquotes are imploded to remove \n
-* nesting ordered lists
 
 
 ## References:
