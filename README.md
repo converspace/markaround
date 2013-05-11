@@ -32,6 +32,7 @@ More Code
     * `http://link`
     * `[http://link "title"]`
     * `(Link Text)[http://link "Title" .h-card]`
+        *  e.g., `(Sandeep)[http://sandeep.io "Sandeep Shetty" .h-card]`
     * `(Link Text)[1]`
       * `[1]: http://link "title"`
     * `Some Text [^1]`
@@ -44,6 +45,8 @@ More Code
       * `[1]: http://link "title"`
   * `{{img_url “alt text“}}[http://link “title”]`
 * `> blockquote`
+* Span
+    * `((some text here))[#id .class1]`
 
 ## TODO:
 *  linebreaks
@@ -52,9 +55,6 @@ More Code
     * explicit syntax for \<br\>? Maybe \$?
     * multi-paragraph lists end with \n\n\n, i.e., two empty lines.
     * email-style blockquotes are imploded to remove \n
-* http://www.wikicreole.org/wiki/Goals
-* http://www.wikicreole.org/wiki/GoodPractices
-* http://www.wikicreole.org/wiki/InvisibleMarkup
 * http://maruku.rubyforge.org/proposal.html
 * Metadata syntax to replace trailing tags invisible markup
 * https://www.dokuwiki.org/wiki:syntax
@@ -62,9 +62,7 @@ More Code
     * Also interesting image alignment syntax.
     * borrow emoticons.
     * See also text to html conversion.
-* microformats: (Sandeep)[http://sandeep.io "Sandeep Shetty" .h-card]
-    * * \<span> markup: \<\<some text here>>[#id .class1]
-* Backticks http://php.net/manual/en/language.operators.execution.php http://unix.stackexchange.com/questions/48392/understanding-backtick
+
 
 ## References:
 * http://xkcd.com/927/
@@ -75,6 +73,12 @@ More Code
 * http://tantek.pbworks.com/w/page/59905776/Markdown
 * http://c2.com/cgi/wiki?WikiDesignPrinciples
 * http://c2.com/cgi/wiki?PrincipalComponentAnalysis
+* http://www.wikicreole.org/wiki/Goals
+* http://www.wikicreole.org/wiki/GoodPractices
+* http://www.wikicreole.org/wiki/InvisibleMarkup
+* Backticks Inspiration
+    * http://php.net/manual/en/language.operators.execution.php
+    * http://unix.stackexchange.com/questions/48392/understanding-backtick
 * http://www.codinghorror.com/blog/2012/10/the-future-of-markdown.html
 * http://www.rumproarious.com/2012/10/29/markdown-the-spec/
 * https://github.com/dcurtis/markdown-mark
