@@ -1,6 +1,6 @@
 # Markaround
 
-A better Markdown (at least for me) with an emphasis on ease of writing (especially inside textareas) and parsing that supports consistence linking, content embeding, only one way to do something (I'm looking at you Markdown headers, lists, bold, emphasis), github style code blocks for easy copy-paste, header anchors, footer references and strikethrough (because you always change your mind).
+A better Markdown (at least for me) with an emphasis on ease of writing (especially inside textareas) and parsing that supports consistent linking, content embeding, only one way to do something (I'm looking at you Markdown headers, lists, bold, emphasis), github style code blocks for easy copy-paste, header anchors, footer references and strikethrough (because you always change your mind).
 
 * `*bold*`
 * `_emphasis_`
