@@ -65,7 +65,7 @@ More Code
 
 
 ## References:
-* Mandaotry link to xkcd: http://xkcd.com/927/
+* Mandatory link to xkcd: http://xkcd.com/927/
 * http://johnmacfarlane.net/pandoc/demo/example9/pandocs-markdown.html
 * http://www.wikimatrix.org/syntax.php?i=116&x=51&y=7
 * http://www.wikicreole.org/wiki/Reasoning
