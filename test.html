@@ -1,0 +1,302 @@
+<h1>Markaround</h1>
+
+<p>Markaround is a plain text formatting syntax for writing for the web.</p>
+
+<p>It is a better Markdown (at least for me) with:</p>
+<ul>
+<li>one and only one way to do something (I'm looking at you Markdown headers, lists and emphasis)</li>
+<li>intuitive emphasis (closer to what's used in plain text email) [^1][^2]</li>
+<li>intuitive line breaks (newline = line break)</li>
+<li>syntax for strikethrough (because you always change your mind and/or make mistakes)</li>
+<li>more readable header syntax</li>
+<li>consistent linking syntax</li>
+<li>code block syntax designed for easy copy-pasting in the common case</li>
+</ul>
+
+
+<h2>Syntax</h2>
+
+
+<h3>Paragraphs and Line Breaks</h3>
+
+<p>Markaround:</p>
+<pre><code>
+This is a paragraph.
+
+This is another paragraph. One or more blank lines end paragraphs.
+* Lists also end paragraphs.
+
+Newlines
+are treated as line breaks. To stop this from happening \
+precede the newline with a backslash.
+</code></pre>
+
+<p>HTML:</p>
+<pre><code>
+&lt;p&gt;This is a paragraph.&lt;/p&gt;
+
+&lt;p&gt;This is another paragraph. One or more blank lines end paragraphs.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Lists also end paragraphs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Newlines&lt;br /&gt;
+are treated as line breaks. To stop this from happening precede the newline with a backslash.&lt;/p&gt;
+</code></pre>
+
+<h3>Bold</h3>
+
+<p>Markaround: <code>*bold*</code></p>
+
+<p>HTML: <code>&lt;strong&gt;bold&lt;/strong&gt;</code></p>
+
+<p>Output: <strong>bold</strong></p>
+
+
+<h3>Italics</h3>
+
+<p>Markaround: <code>_italics_</code></p>
+
+<p>HTML: <code>&lt;em&gt;italics&lt;em&gt;</code></p>
+
+<p>Output: <em>italics</em></p>
+
+
+<h3>Strikethrough</h3>
+
+<p>Markaround: <code>-strikethrough-</code></p>
+
+<p>HTML: <code>&lt;del&gt;strikethrough&lt;del&gt;</code></p>
+
+<p>Output: <del>strikethrough</del></p>
+
+
+<h3>Code and Code Blocks</h3>
+
+<p>Double single quotes are used for both inline code and code blocks.</p>
+
+<p>Markaround: <code>Here is some \'\'code\'\' you can use</code></p>
+
+<p>HTML: <code>Here is some &lt;code&gt;code&lt;code&gt; you can use</code></p>
+
+<p>Output: Here is some <code>code</code> you can use.</p>
+
+
+<p>Double single quotes on one line by themselves mark the start and end of a clode block. If they are indented then every line in the contained text is stripped of the same number of spaces and/or tabs.</p>
+
+
+<p>Markaround:</p>
+<pre><code>
+  Here is some code:
+    \'\'{#example1 .php}
+    &lt;?php
+      echo &quot;Hello World&quot;;
+    ?&gt;
+    \'\'
+</code></pre>
+
+<p>HTML:</p>
+<pre><code>
+Here is some code: &lt;br /&gt;
+&lt;pre id=&quot;example1&quot; class=&quot;php&quot;&gt;&lt;code&gt;
+&lt;?php
+  echo &quot;Hello World&quot;;
+?&gt;
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+
+
+<p>Fenced code blocks are better than markdowns indentation<del>based code</del>blocks because they:</p>
+<ul>
+<li>can begin and end with blank lines</li>
+<li>can be used immediately following a list</li>
+<li>allow for easy copy-pasting by not forcing indents</li>
+</ul>
+
+<p>Double single quotes was chosen over backticks because it looks more natural as a proxy for quoting literals. The double single quotes syntax was borrowed from Dokuwiki [^dokuwiki</p>
+
+<p>Using the same syntax for inline and block code was borrowed from Creole 1.0 [^creole</p>
+
+
+<h3>Headers</h3>
+
+<p>Any of the following characters can be used as the underline: <code>= - ~ . ` &quot; * + ^ _ : #</code></p>
+
+<p>The first six, in that order, work very well to indicate decreasing levels (see example below). The same character must be used for the same indentation level.</p>
+
+<p>Markaround:</p>
+<pre><code>
+Level 1
+=======
+
+Level 2
+-------
+
+Level 3
+~~~~~~~
+
+Level 4
+.......{#level4 .class1 .class2}
+
+Level 5
+```````
+
+Level 6
+&quot;&quot;&quot;&quot;&quot;&quot;&quot;
+
+Another Level 2
+---------------
+
+Another Level 3
+~~~~~~~~~~~~~~~
+</code></pre>
+
+<p>HTML:</p>
+<pre><code>
+&lt;h1 id=&quot;level_1&quot;&gt;Level 1&lt;/h1&gt;
+&lt;h2 id=&quot;level_2&quot;&gt;Level 2&lt;/h2&gt;
+&lt;h3 id=&quot;level_3&quot;&gt;Level 3&lt;/h3&gt;
+&lt;h4 id=&quot;level4&quot; class=&quot;class1 class2&quot;&gt;Level 4&lt;/h4&gt;
+&lt;h5 id=&quot;level_5&quot;&gt;Level 5&lt;/h5&gt;
+&lt;h6 id=&quot;level_6&quot;&gt;Level 6&lt;/h6&gt;
+&lt;h2 id=&quot;another_level_2&quot;&gt;Another Level 2&lt;/h2&gt;
+&lt;h3 id=&quot;another_level_3&quot;&gt;Another Level 3&lt;/h3&gt;
+</code></pre>
+
+
+<h3>Horizontal Rule</h3>
+
+<p>One or more hyphens on a line surounded by blank lines.</p>
+
+<p>Markaround:</p>
+<pre><code>
+
+----
+
+</code></pre>
+
+<p>HTML:</p>
+<pre><code>
+&lt;hr /&gt;
+</code></pre>
+
+
+<h3>Blockquotes</h3>
+
+<p>Markaround:</p>
+<pre><code>
+&gt; This is a blockquote with two paragraphs.
+&gt;
+&gt; This is the second paragraph.
+
+&gt; Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor \
+  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud \
+  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute \
+  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia \
+  deserunt mollit anim id est laborum.
+&gt;
+&gt; Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.
+&gt;
+&gt; Header
+&gt; ~~~~~~
+&gt;
+&gt; * one
+&gt; * two
+&gt; * three
+&gt;
+&gt; &gt; This is a  blockquote-in-a-blockquote.
+&gt;
+&gt; ''
+&gt; This is a code block
+&gt; ''
+&gt;
+</code></pre>
+
+<p>HTML:</p>
+<pre><code>
+&lt;blockquote&gt;
+&lt;p&gt;This is a blockquote with two paragraphs.&lt;/p&gt;
+
+&lt;p&gt;This is the second paragraph.&lt;/p&gt;
+
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
+
+&lt;p&gt;Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.&lt;/p&gt;
+
+&lt;h3&gt;Header&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;one&lt;/li&gt;
+&lt;li&gt;two&lt;/li&gt;
+&lt;li&gt;three&lt;/li&gt;
+&lt;ul&gt;
+
+&lt;blockquote&gt;
+This is a  blockquote-in-a-blockquote.
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;
+This is a code block
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;/blockquote&gt;
+</code></pre>
+
+<h3>Lists</h3>
+
+<p>Markaround:</p>
+<pre><code>
+* List items start with a list marker followed by a space.
+* Unordered list items start with an asterisk and ordered list items start with a hash.
+
+* Blank lines between list items will wrap them in &lt;p&gt; tags.
+
+* List items may consist of multiple other block level elements like paragraphs, blockquotes, lists and code blocks.
+
+  Just indent them by the same number of spaces as the previous one.
+  The same also applies to line breaks.
+
+  &gt; This is a blockquote
+
+</code></pre>
+<p>  This is a code block</p>
+<pre><code>
+
+* List items can have multiple levels. To add another level,
+  * just indent a bit deeper
+    * and so on
+  * items at the same level must be indented by the same number of spaces and/or tabs.
+* Ordered lists can include list style hints that also make them readable when you are referencing an item elsewhere.
+  # default same as using a hash
+    1. one
+    2. two
+  # lower alpha
+    a. one
+    b. two
+    c. three
+  # upper alph
+    A. one
+    B. two
+    C. three
+  # roman numerals [^roman]
+    I. one
+    II. two
+    III. three
+</code></pre>
+
+<p>HTML:</p>
+<pre><code>
+
+</code></pre>
+
+
+
+
+<h2>References</h2>
+
+[^1]: http://kb.mozillazine.org/Plain<em>text</em>e<del>mail_</del><em>Thunderbird#Structured</em>Text<br />
+[^2]: http://email.about.com/od/netiquettetips/qt/et070205.htm<br />
+[^roman]: http://stackoverflow.com/questions/267399/how<del>do</del>you<del>match</del>only<del>valid</del>roman<del>numerals</del>with<del>a</del>regular<br />
+[^dokuwiki<br />
+[^creole-nowiki]: http://www.wikicreole.org/wiki/Creole1.0#section-Creole1.0-NowikiPreformatted<br />
