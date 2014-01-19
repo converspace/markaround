@@ -50,7 +50,7 @@ Bold
 
 Markaround: ''*bold*''
 
-HTML: ''<strong>bold<strong>''
+HTML: ''<strong>bold</strong>''
 
 Output: *bold*
 
