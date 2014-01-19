@@ -120,9 +120,9 @@ Using the same syntax for inline and block code was borrowed from Creole 1.0 [^c
 Headers
 ~~~~~~~~
 
-Any of the following characters can be used as the underline: ''= - ~ ' . ` * + ^ " _ : #''
+Any of the following characters repeated three or more times and at least as long as the title text can be used as the underline: ''= - ~ ' . ` * + ^ " _ : #''
 
-The first six, in that order, work very well to indicate decreasing levels (see example below). The same character must be used for the same indentation level. The underline must be at least as long as the title text.
+The first six, in that order, work very well to indicate decreasing levels (see example below). The same character must be used for the same indentation level.
 
 Markaround:
 	''
