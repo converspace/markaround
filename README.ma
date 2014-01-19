@@ -124,7 +124,7 @@ Using the same syntax for inline and block code was borrowed from Creole 1.0 [^c
 Headers
 ~~~~~~~~
 
-Any of the following characters repeated three or more times and at least as long as the title text can be used as the underline: ''= - ~ ' . ` * + ^ " _ : #''
+Any of the following characters can be used as the underline: ''= - ~ . ` " * + ^ _ : #''
 
 The first six, in that order, work very well to indicate decreasing levels (see example below). The same character must be used for the same indentation level.
 
@@ -140,18 +140,18 @@ Level 3
 ~~~~~~~
 
 Level 4
-'''''''{#level4 .class1 .class2}
+.......{#level4 .class1 .class2}
 
 Level 5
-.......
-
-Level 6
 ```````
 
-Another Level 2 Heading
------------------------
+Level 6
+"""""""
 
-Level 3 Heading
+Another Level 2
+---------------
+
+Another Level 3
 ~~~~~~~~~~~~~~~
 ''
 
@@ -163,15 +163,15 @@ HTML:
 <h4 id="level4" class="class1 class2">Level 4</h4>
 <h5 id="level_5">Level 5</h5>
 <h6 id="level_6">Level 6</h6>
-<h2 id="another_level_2_heading">Another Level 2 Heading</h2>
-<h3 id="another_level_3_heading">Another Level 3 Heading</h3>
+<h2 id="another_level_2">Another Level 2</h2>
+<h3 id="another_level_3">Another Level 3</h3>
 ''
 
 
 Horizontal Rule
 ~~~~~~~~~~~~~~~
 
-3 or more hyphens on a line surounded by blank lines.
+One or more hyphens on a line surounded by blank lines.
 
 Markaround:
 ''
