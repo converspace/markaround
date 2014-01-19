@@ -86,7 +86,7 @@ HTML: ''Here is some <code>code<code> you can use''
 Output: Here is some ''code'' you can use.
 
 
-Double single quotes on one line by themselves mark the start and end of a clode block. If they are indented then every line in the contained text is stripped of the same number of indents.
+Double single quotes on one line by themselves mark the start and end of a clode block. If they are indented then every line in the contained text is stripped of the same number of spaces and/or tabs.
 
 
 Markaround:
@@ -268,7 +268,7 @@ Markaround:
 	* List items can have multiple levels. To add another level,
 		* just indent a bit deeper
 		   * and so on
-		* items at the same level must be indented by the same number of spaces.
+		* items at the same level must be indented by the same number of spaces and/or tabs.
 	* Ordered lists can include list style hints that also make them readable when you are referencing an item elsewhere.
 		# default same as using a hash
 			1. one
