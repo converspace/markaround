@@ -1,5 +1,6 @@
 <?php
 
+// TODO: bold, italics and strikethrough should only work at word boundaries
 // TODO: OL
 // TODO: UL and OL nested block elements
 // TODO: backslash escaping
@@ -95,6 +96,7 @@
 						$markaround .= "</code></pre>\n";
 					}
 					else {
+						$line = htmlspecialchars($line);
 						$markaround .= "$line\n";
 					}
 					break;
@@ -173,6 +175,7 @@
 				case 'CODE_END_MAYBE':
 					if ("'" == $char) {
 						$state = 'START';
+						$token = htmlspecialchars($token);
 						$markaround .= "<code>$token</code>";
 					}
 					else {
