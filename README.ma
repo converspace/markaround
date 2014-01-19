@@ -21,28 +21,29 @@ Paragraphs and Line Breaks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Markaround:
-	''
-	This is a paragraph.
+''
+This is a paragraph.
 
-	This is another paragraph. One or more blank lines end paragraphs.
-	* Lists also end paragraphs.
+This is another paragraph. One or more blank lines end paragraphs.
+* Lists also end paragraphs.
 
-	Newlines
-	are treated as line breaks. To stop this from happening \
-	precede the newline with a backslash.
-	''
+Newlines
+are treated as line breaks. To stop this from happening \
+precede the newline with a backslash.
+''
+
 HTML:
-	''
-	<p>This is a paragraph.</p>
+''
+<p>This is a paragraph.</p>
 
-	<p>This is another paragraph. One or more blank lines end paragraphs.</p>
-	<ul>
-	<li>Lists also end paragraphs.</li>
-	</ul>
+<p>This is another paragraph. One or more blank lines end paragraphs.</p>
+<ul>
+<li>Lists also end paragraphs.</li>
+</ul>
 
-	<p>Newlines<br />
-	are treated as line breaks. To stop this from happening precede the newline with a backslash.</p>
-	''
+<p>Newlines<br />
+are treated as line breaks. To stop this from happening precede the newline with a backslash.</p>
+''
 
 Bold
 ~~~~
@@ -69,7 +70,7 @@ Strikethrough
 
 Markaround: ''-strikethrough-''
 
-HTML: ''<del>-strikethrough<del>''
+HTML: ''<del>strikethrough<del>''
 
 Output: -strikethrough-
 
@@ -90,21 +91,24 @@ Double single quotes on one line by themselves mark the start and end of a clode
 
 
 Markaround:
-	''
-	Here is some code:
-		\'\'{#example1 .php}
-		<?php
-			echo "Hello World";
-		?>
-		\'\'
-	''
+  ''
+  Here is some code:
+    \'\'{#example1 .php}
+    <?php
+      echo "Hello World";
+    ?>
+    \'\'
+  ''
+
 HTML:
-	''
-	Here is some code: <br />
-	<pre id="example1" class="php"><code>
-	This is a code block
-	</code></pre>
-	''
+''
+Here is some code: <br />
+<pre id="example1" class="php"><code>
+<?php
+  echo "Hello World";
+?>
+</code></pre>
+''
 
 
 Fenced code blocks are better than markdown's indentation-based code-blocks because they:
@@ -125,173 +129,173 @@ Any of the following characters repeated three or more times and at least as lon
 The first six, in that order, work very well to indicate decreasing levels (see example below). The same character must be used for the same indentation level.
 
 Markaround:
-	''
-	Level 1
-	=======
+''
+Level 1
+=======
 
-	Level 2
-	-------
+Level 2
+-------
 
-	Level 3
-	~~~~~~~
+Level 3
+~~~~~~~
 
-	Level 4
-	'''''''{#level4 .class1 .class2}
+Level 4
+'''''''{#level4 .class1 .class2}
 
-	Level 5
-	.......
+Level 5
+.......
 
-	Level 6
-	```````
+Level 6
+```````
 
-	Another Level 2 Heading
-	-----------------------
+Another Level 2 Heading
+-----------------------
 
-	Level 3 Heading
-	~~~~~~~~~~~~~~~
-	''
+Level 3 Heading
+~~~~~~~~~~~~~~~
+''
 
 HTML:
-	''
-	<h1 id="level_1">Level 1</h1>
-	<h2 id="level_2">Level 2</h2>
-	<h3 id="level_3">Level 3</h3>
-	<h4 id="level4" class="class1 class2">Level 4</h4>
-	<h5 id="level_5">Level 5</h5>
-	<h6 id="level_6">Level 6</h6>
-	<h2 id="another_level_2_heading">Another Level 2 Heading</h2>
-	<h3 id="another_level_3_heading">Another Level 3 Heading</h3>
-	''
+''
+<h1 id="level_1">Level 1</h1>
+<h2 id="level_2">Level 2</h2>
+<h3 id="level_3">Level 3</h3>
+<h4 id="level4" class="class1 class2">Level 4</h4>
+<h5 id="level_5">Level 5</h5>
+<h6 id="level_6">Level 6</h6>
+<h2 id="another_level_2_heading">Another Level 2 Heading</h2>
+<h3 id="another_level_3_heading">Another Level 3 Heading</h3>
+''
 
 
 Horizontal Rule
 ~~~~~~~~~~~~~~~
 
-4 or more hyphens on a line surounded by blank lines.
+3 or more hyphens on a line surounded by blank lines.
 
 Markaround:
-	''
+''
 
-	----
+----
 
-	''
+''
 
 HTML:
-	''
-	<hr />
-	''
+''
+<hr />
+''
 
 
 Blockquotes
 ~~~~~~~~~~~
 
 Markaround:
-	''
-	> This is a blockquote with two paragraphs.
-	>
-	> This is the second paragraph.
+''
+> This is a blockquote with two paragraphs.
+>
+> This is the second paragraph.
 
-	> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor \
-	  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud \
-	  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute \
-	  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \
-	  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia \
-	  deserunt mollit anim id est laborum.
-	>
-	> Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.
-	>
-	> Header
-	> ~~~~~~
-	>
-	> * one
-	> * two
-	> * three
-	>
-	> > This is a  blockquote-in-a-blockquote.
-	>
-	>
-	>    This is a code block
-	>
-	''
+> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor \
+  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud \
+  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute \
+  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia \
+  deserunt mollit anim id est laborum.
+>
+> Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.
+>
+> Header
+> ~~~~~~
+>
+> * one
+> * two
+> * three
+>
+> > This is a  blockquote-in-a-blockquote.
+>
+> ''
+> This is a code block
+> ''
+>
+''
 
 HTML:
-	''
-	<blockquote>
-	<p>This is a blockquote with two paragraphs.</p>
+''
+<blockquote>
+<p>This is a blockquote with two paragraphs.</p>
 
-	<p>This is the second paragraph.</p>
+<p>This is the second paragraph.</p>
 
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-	<p>Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.</p>
+<p>Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.</p>
 
-	<h3>Header</h3>
+<h3>Header</h3>
 
-	<ul>
-	<li>one</li>
-	<li>two</li>
-	<li>three</li>
-	<ul>
+<ul>
+<li>one</li>
+<li>two</li>
+<li>three</li>
+<ul>
 
-	<blockquote>
-	This is a  blockquote-in-a-blockquote.
-	</blockquote>
+<blockquote>
+This is a  blockquote-in-a-blockquote.
+</blockquote>
 
-	<pre><code>
-	This is a code block
-	</code></pre>
+<pre><code>
+This is a code block
+</code></pre>
 
-	</blockquote>
-	''
+</blockquote>
+''
 
 Lists
 ~~~~~
 
 Markaround:
-	''
-	* List items start with a list marker followed by a space.
-	* Unordered list items start with an asterisk and ordered list items start with a hash.
+''
+* List items start with a list marker followed by a space.
+* Unordered list items start with an asterisk and ordered list items start with a hash.
 
-	* Blank lines between list items will wrap them in <p> tags.
+* Blank lines between list items will wrap them in <p> tags.
 
-	* List items may consist of multiple other block level elements like paragraphs, blockquotes, lists and code blocks.
+* List items may consist of multiple other block level elements like paragraphs, blockquotes, lists and code blocks.
 
-	  Just indent them by the same number of spaces as the previous one.
-	  The same also applies to line breaks.
+  Just indent them by the same number of spaces as the previous one.
+  The same also applies to line breaks.
 
-	  > This is a blockquote
+  > This is a blockquote
 
-	  ''
-	  This is a code block
-	  ''
+  ''
+  This is a code block
+  ''
 
-	* List items can have multiple levels. To add another level,
-		* just indent a bit deeper
-		   * and so on
-		* items at the same level must be indented by the same number of spaces and/or tabs.
-	* Ordered lists can include list style hints that also make them readable when you are referencing an item elsewhere.
-		# default same as using a hash
-			1. one
-			2. two
-		# lower alpha
-			a. one
-			b. two
-			c. three
-		# upper alph
-			A. one
-			B. two
-			C. three
-		# roman numerals [^roman]
-			I. one
-			II. two
-			III. three
-
-	''
+* List items can have multiple levels. To add another level,
+  * just indent a bit deeper
+    * and so on
+  * items at the same level must be indented by the same number of spaces and/or tabs.
+* Ordered lists can include list style hints that also make them readable when you are referencing an item elsewhere.
+  # default same as using a hash
+    1. one
+    2. two
+  # lower alpha
+    a. one
+    b. two
+    c. three
+  # upper alph
+    A. one
+    B. two
+    C. three
+  # roman numerals [^roman]
+    I. one
+    II. two
+    III. three
+''
 
 HTML:
-	''
+''
 
-	''
+''
 
 
 
