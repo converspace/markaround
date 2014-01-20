@@ -1,9 +1,7 @@
 <?php
 
-// TODO: bold, italics and strikethrough should only work at word boundaries
 // TODO: OL
 // TODO: Multi line lists and other nested block elements
-// TODO: backslash escaping
 // TOOD: <HR />
 // TODO: header attributes
 // TODO: code block attributes
@@ -74,7 +72,12 @@
 					}
 					else {
 						$prev = inline_parser($prev);
-						$markaround .= "$prev<br />\n";
+						if ('\\' == substr($prev, -1)) {
+							$line = substr($prev, 0, -1)."\n$line";
+						}
+						else {
+							$markaround .= "$prev<br />\n";
+						}
 						$state = 'PARA_MAYBE';
 						array_push($stack, $line);
 					}
@@ -97,6 +100,7 @@
 					}
 					else {
 						$line = htmlspecialchars($line);
+						$line = str_replace("\\'", "'", $line);
 						$markaround .= "$line\n";
 					}
 					break;
@@ -105,22 +109,25 @@
 
 		if ('PARA_MAYBE' == $state) {
 			$prev = array_pop($stack);
-			$markaround .= "$prev<br />\n";
+			$markaround .= ('\\' == substr($prev, -1)) ? substr($prev, 0, -1)."\n" : "$prev<br />\n";
 		}
 
 		return $markaround;
 	}
 
 	function inline_parser($str) {
+
 		$markaround = '';
 		$token = '';
+		$word_start_boundry = array(' ', '"', "'", '(', '{', '[');
+		$word_end_boundry = array(' ', '.', ',', ';', ':', '"', "'", '?', '!', ')', '}', ']');
 		$state = 'START';
 
 		foreach (str_split($str) as $char) {
 			switch ($state) {
 				case 'START':
 					if ('_' == $char) {
-						$state = 'EMPHASIS_START';
+						$state = 'EM_START';
 					}
 					elseif ('*' == $char) {
 						$state = 'STRONG_START';
@@ -131,52 +138,103 @@
 					elseif ("'" == $char) {
 						$state = 'CODE_START_MAYBE';
 					}
+					else {
+						$state = 'START';
+						$markaround .= $char;
+					}
+					break;
+				case 'NOFORMAT':
+					if (in_array($char, $word_start_boundry)) {
+						$state = 'START';
+						$markaround .= $char;
+					}
 					else $markaround .= $char;
 					break;
-				case 'EMPHASIS_START':
+				case 'EM_START':
 					if ('_' == $char) {
-						$state = 'START';
-						$markaround .= "<em>$token</em>";
+						$state = 'EM_END_MAYBE';
+					}
+					else $token .= $char;
+					break;
+				case 'EM_END_MAYBE':
+					if (in_array($char, $word_end_boundry)) {
+						$state = 'NOFORMAT';
+						$token = str_replace("\\_", "_", $token);
+						$markaround .= "<em>$token</em>$char";
 						$token = '';
 					}
-					else $token .=$char;
+					else {
+						$state = 'EM_START';
+						$token .= '_'.$char;
+					}
 					break;
 				case 'STRONG_START':
 					if ('*' == $char) {
-						$state = 'START';
-						$markaround .= "<strong>$token</strong>";
+						$state = 'STRONG_END_MAYBE';
+					}
+					else $token .= $char;
+					break;
+				case 'STRONG_END_MAYBE':
+					if (in_array($char, $word_end_boundry)) {
+						$state = 'NOFORMAT';
+						$token = str_replace("\\*", "*", $token);
+						$markaround .= "<strong>$token</strong>$char";
 						$token = '';
 					}
-					else $token .=$char;
+					else {
+						$state = 'STRONG_START';
+						$token .= '*'.$char;
+					}
 					break;
 				case 'DEL_START':
 					if ('-' == $char) {
-						$state = 'START';
-						$markaround .= "<del>$token</del>";
+						$state = 'DEL_END_MAYBE';
+					}
+					else $token .= $char;
+					break;
+				case 'DEL_END_MAYBE':
+					if (in_array($char, $word_end_boundry)) {
+						$state = 'NOFORMAT';
+						$token = str_replace("\\-", "-", $token);
+						$markaround .= "<del>$token</del>$char";
 						$token = '';
 					}
-					else $token .=$char;
+					else {
+						$state = 'DEL_START';
+						$token .= '-'.$char;
+					}
 					break;
 				case 'CODE_START_MAYBE':
 					if ("'" == $char) {
 						$state = 'CODE_START';
 					}
 					else {
-						$state = 'START';
-						$markaround .= $char;
+						$state = 'NOFORMAT';
+						$markaround .= "'".$char;
 					}
 					break;
 				case 'CODE_START':
 					if ("'" == $char) {
-						$state = 'CODE_END_MAYBE';
+						$state = 'CODE_END_START';
 					}
 					else $token .= $char;
 					break;
-				case 'CODE_END_MAYBE':
+				case 'CODE_END_START':
 					if ("'" == $char) {
-						$state = 'START';
+						$state = 'CODE_END_MAYBE';
+					}
+					else {
+						$state = 'CODE_START';
+						$token .= "'".$char;
+					}
+					break;
+				case 'CODE_END_MAYBE':
+					if (in_array($char, $word_end_boundry)) {
+						$state = 'NOFORMAT';
 						$token = htmlspecialchars($token);
-						$markaround .= "<code>$token</code>";
+						$token = str_replace("\\'", "'", $token);
+						$markaround .= "<code>$token</code>$char";
+						$token = '';
 					}
 					else {
 						$state = 'CODE_START';
@@ -184,6 +242,15 @@
 					}
 					break;
 			}
+		}
+
+		if (preg_match('/([A-Z]+)_END_MAYBE/', $state, $matches)) {
+			$tag = strtolower($matches[1]);
+			if ('code' == $tag) {
+				$token = htmlspecialchars($token);
+				$token = str_replace("\\'", "'", $token);
+			}
+			$markaround .= "<$tag>$token</$tag>";
 		}
 
 		return $markaround;
