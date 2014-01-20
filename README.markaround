@@ -1,4 +1,5 @@
 
+
 Markaround
 ==========
 
@@ -16,7 +17,6 @@ It is a better Markdown (at least for me) with:
 
 Syntax
 ------
-
 
 Paragraphs and Line Breaks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -43,7 +43,8 @@ HTML:
 </ul>
 
 <p>Newlines<br />
-are treated as line breaks. To stop this from happening precede the newline with a backslash.</p>
+are treated as line breaks. To stop this from happening
+precede the newline with a backslash.</p>
 ''
 
 Output:
