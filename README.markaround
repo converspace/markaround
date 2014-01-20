@@ -1,5 +1,4 @@
 
-
 Markaround
 ==========
 
@@ -206,6 +205,10 @@ HTML:
 ''
 <hr />
 ''
+
+Output:
+
+-
 
 
 Blockquotes
