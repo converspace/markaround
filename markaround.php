@@ -2,7 +2,7 @@
 
 // TODO: bold, italics and strikethrough should only work at word boundaries
 // TODO: OL
-// TODO: UL and OL nested block elements
+// TODO: Multi line lists and other nested block elements
 // TODO: backslash escaping
 // TOOD: <HR />
 // TODO: header attributes
