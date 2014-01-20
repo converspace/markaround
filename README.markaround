@@ -1,3 +1,5 @@
+
+
 Markaround
 ==========
 
@@ -44,6 +46,17 @@ HTML:
 <p>Newlines<br />
 are treated as line breaks. To stop this from happening precede the newline with a backslash.</p>
 ''
+
+Output:
+This is a paragraph.
+
+This is another paragraph. One or more blank lines end paragraphs.
+* Lists also end paragraphs.
+
+Newlines
+are treated as line breaks. To stop this from happening \
+precede the newline with a backslash.
+
 
 Bold
 ~~~~
@@ -102,13 +115,22 @@ Markaround:
 
 HTML:
 ''
-Here is some code: <br />
+<p>Here is some code:</p>
 <pre id="example1" class="php"><code>
 <?php
   echo "Hello World";
 ?>
 </code></pre>
 ''
+
+Output:
+
+Here is some code:
+	''
+    <?php
+      echo "Hello World";
+    ?>
+    ''
 
 
 Fenced code blocks are better than markdown's indentation-based code-blocks because they:
@@ -266,9 +288,9 @@ Markaround:
 
   > This is a blockquote
 
-  ''
+  \'\'
   This is a code block
-  ''
+  \'\'
 
 * List items can have multiple levels. To add another level,
   * just indent a bit deeper
