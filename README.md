@@ -1,4 +1,6 @@
 
-`README.markaround` specifies Markaround in Markaround.
 
-`README.html` is generated from `README.markaround` by `test.php` using the Markaround parser (`markaround.php`).
+[README.markaround](https://rawgithub.com/converspace/markaround/master/README.markaround), specifies Markaround in Markaround.
+
+
+[README.html](http://rawgithub.com/converspace/markaround/master/README.html) is the HTML [generated](https://github.com/converspace/markaround/blob/master/test.php) from the above file using the [Markaround parser](https://github.com/converspace/markaround/blob/master/markaround.php).
