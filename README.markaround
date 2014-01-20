@@ -48,6 +48,7 @@ precede the newline with a backslash.</p>
 ''
 
 Output:
+
 This is a paragraph.
 
 This is another paragraph. One or more blank lines end paragraphs.
