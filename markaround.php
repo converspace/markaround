@@ -2,7 +2,6 @@
 
 // TODO: OL
 // TODO: Multi line lists and other nested block elements
-// TOOD: <HR />
 // TODO: header attributes
 // TODO: code block attributes
 // TODO: Blockquotes
@@ -21,79 +20,82 @@
 
 		foreach($lines as $line) {
 			switch ($state) {
-				case 'START';
-					if (trim($line)) {
-						if (preg_match('/^\s*[*]\s+(.+)$/', $line, $matches)) {
-							$state = 'UL_START';
-							$markaround .= "<ul>\n<li>{$matches[1]}</li>asdsadas\n";
+				case 'START':
+					$previous_line = array_pop($stack);
+
+					if (!trim($line)) {
+						$line_before_the_previous_line = array_pop($stack);
+
+						if (preg_match('/^-+\s*$/', $previous_line) and !trim($line_before_the_previous_line)) {
+							$markaround .= "<hr />\n\n";
+						}
+
+						elseif (trim($previous_line)) {
+
+							//$previous_line = inline_parser($previous_line);
+
+							if (!is_null($line_before_the_previous_line)) {
+								$markaround .= "<p>$previous_line</p>\n";
+								$stack = array();
+							}
+							else {
+								$markaround .= "$previous_line<br />\n";
+							}
+						}
+
+						$markaround .= "\n";
+						array_push($stack, '');
+					}
+					else {
+						if (preg_match('/^([=\-~\.`"*+^_:#])\1{0,}$/', $line, $matches) and trim($previous_line)) {
+
+							$level = array_search($matches[1], $header_levels);
+							if (false === $level) {
+								array_push($header_levels, $matches[1]);
+								$level = array_search($matches[1], $header_levels);
+							}
+							$level = $level + 1;
+							$markaround .= "<h$level>$previous_line</h$level>\n";
+							$stack = array();
 						}
 						elseif (preg_match('/^\s*\'\'\s*$/', $line)) {
-							$state = 'CODEBLOCK_START';
-							$markaround .= "<pre><code>\n";
+							if (trim($previous_line)) {
+								//$previous_line = inline_parser($previous_line);
+								$markaround .= "<p>$previous_line</p>\n<pre><code>\n";
+							}
+							else {
+								$markaround .= "<pre><code>\n";
+							}
+							$state = 'CODEBLOCK';
+
+						}
+						elseif (preg_match('/^\s*[*]\s+(.+)$/', $line, $matches)) {
+							//$previous_line = inline_parser($previous_line);
+							$markaround .= "<p>$previous_line</p>\n<ul>\n<li>{$matches[1]}</li>\n";
+							$state = 'UL';
 						}
 						else {
-							$state = 'PARA_MAYBE';
+							if (trim($previous_line)) {
+
+
+								if ('\\' == substr($previous_line, -1)) {
+										$line = substr($previous_line, 0, -1)."\n$line";
+								}
+								else {
+										//$previous_line = inline_parser($previous_line);
+										$markaround .= "$previous_line<br />\n";
+										$stack = array();
+								}
+							}
+							else {
+								array_push($stack, '');
+							}
+
 							array_push($stack, $line);
 						}
 					}
-					else {
-						$state = 'START';
-						$markaround .= "\n";
-					}
 					break;
-				case 'PARA_MAYBE':
-					$prev = array_pop($stack);
-					if (!trim($line)) {
-						$state = 'START';
-						$prev = inline_parser($prev);
-						$markaround .= "<p>$prev</p>\n\n";
-					}
-					elseif (preg_match('/^\s*[*]\s+(.+)$/', $line, $matches)) {
-						$state = 'UL_START';
-						$prev = inline_parser($prev);
-						$markaround .= "<p>$prev</p>\n<ul>\n<li>{$matches[1]}</li>\n";
-					}
-					elseif (preg_match('/^\s*\'\'\s*$/', $line)) {
-							$state = 'CODEBLOCK_START';
-							$prev = inline_parser($prev);
-							$markaround .= "<p>$prev</p>\n<pre><code>\n";
-					}
-					elseif (preg_match('/^(=|-|~|\.|`|"|\*|\+|^|_|:|#)\1{0,}$/', $line, $matches)) {
-						$state = 'START';
-						$level = array_search($matches[1], $header_levels);
-						if (false === $level) {
-							array_push($header_levels, $matches[1]);
-							$level = array_search($matches[1], $header_levels);
-						}
-
-						$level = $level + 1;
-						$markaround .= "<h$level>$prev</h$level>\n";
-
-					}
-					else {
-						$prev = inline_parser($prev);
-						if ('\\' == substr($prev, -1)) {
-							$line = substr($prev, 0, -1)."\n$line";
-						}
-						else {
-							$markaround .= "$prev<br />\n";
-						}
-						$state = 'PARA_MAYBE';
-						array_push($stack, $line);
-					}
-					break;
-				case 'UL_START':
-				case 'UL_CONTINUED':
-					if (preg_match('/^\s*[*]\s+(.+)$/', $line, $matches)) {
-						$state = 'UL_CONTINUED';
-						$markaround .= "<li>{$matches[1]}</li>\n";
-					}
-					elseif (!trim($line)) {
-						$state = 'START';
-						$markaround .= "</ul>\n\n";
-					}
-					break;
-				case 'CODEBLOCK_START':
+				case 'CODEBLOCK':
 					if (preg_match('/^\s*\'\'\s*$/', $line)) {
 						$state = 'START';
 						$markaround .= "</code></pre>\n";
@@ -104,12 +106,21 @@
 						$markaround .= "$line\n";
 					}
 					break;
+				case 'UL':
+					if (preg_match('/^\s*[*]\s+(.+)$/', $line, $matches)) {
+						$markaround .= "<li>{$matches[1]}</li>\n";
+					}
+					elseif (!trim($line)) {
+						$markaround .= "</ul>\n\n";
+						$state = 'START';
+					}
+					break;
 			}
 		}
 
-		if ('PARA_MAYBE' == $state) {
-			$prev = array_pop($stack);
-			$markaround .= ('\\' == substr($prev, -1)) ? substr($prev, 0, -1)."\n" : "$prev<br />\n";
+		$previous_line = array_pop($stack);
+		if (trim($previous_line)) {
+			$markaround .= "$previous_line";
 		}
 
 		return $markaround;
