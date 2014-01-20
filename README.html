@@ -1,3 +1,5 @@
+
+
 <h1>Markaround</h1>
 
 <p>Markaround is a plain text formatting syntax for writing for the web.</p>
@@ -44,6 +46,19 @@ precede the newline with a backslash.
 are treated as line breaks. To stop this from happening precede the newline with a backslash.&lt;/p&gt;
 </code></pre>
 
+Output:<br />
+<p>This is a paragraph.</p>
+
+<p>This is another paragraph. One or more blank lines end paragraphs.</p>
+<ul>
+<li>Lists also end paragraphs.</li>
+</ul>
+
+Newlines<br />
+<p>are treated as line breaks. To stop this from happening 
+precede the newline with a backslash.</p>
+
+
 <h3>Bold</h3>
 
 <p>Markaround: <code>*bold*</code></p>
@@ -75,7 +90,7 @@ are treated as line breaks. To stop this from happening precede the newline with
 
 <p>Double single quotes are used for both inline code and code blocks.</p>
 
-<p>Markaround: <code>Here is some \'\'code\'\' you can use</code></p>
+<p>Markaround: <code>Here is some ''code'' you can use</code></p>
 
 <p>HTML: <code>Here is some &lt;code&gt;code&lt;code&gt; you can use</code></p>
 
@@ -88,16 +103,16 @@ are treated as line breaks. To stop this from happening precede the newline with
 <p>Markaround:</p>
 <pre><code>
   Here is some code:
-    \'\'{#example1 .php}
+    ''{#example1 .php}
     &lt;?php
       echo &quot;Hello World&quot;;
     ?&gt;
-    \'\'
+    ''
 </code></pre>
 
 <p>HTML:</p>
 <pre><code>
-Here is some code: &lt;br /&gt;
+&lt;p&gt;Here is some code:&lt;/p&gt;
 &lt;pre id=&quot;example1&quot; class=&quot;php&quot;&gt;&lt;code&gt;
 &lt;?php
   echo &quot;Hello World&quot;;
@@ -105,8 +120,17 @@ Here is some code: &lt;br /&gt;
 &lt;/code&gt;&lt;/pre&gt;
 </code></pre>
 
+<p>Output:</p>
 
-<p>Fenced code blocks are better than markdowns indentation<del>based code</del>blocks because they:</p>
+<p>Here is some code:</p>
+<pre><code>
+    &lt;?php
+      echo &quot;Hello World&quot;;
+    ?&gt;
+</code></pre>
+
+
+<p>Fenced code blocks are better than markdown's indentation</p>
 <ul>
 <li>can begin and end with blank lines</li>
 <li>can be used immediately following a list</li>
@@ -259,9 +283,9 @@ This is a code block
 
   &gt; This is a blockquote
 
-</code></pre>
-<p>  This is a code block</p>
-<pre><code>
+  ''
+  This is a code block
+  ''
 
 * List items can have multiple levels. To add another level,
   * just indent a bit deeper
@@ -295,8 +319,8 @@ This is a code block
 
 <h2>References</h2>
 
-[^1]: http://kb.mozillazine.org/Plain<em>text</em>e<del>mail_</del><em>Thunderbird#Structured</em>Text<br />
+[^1]: http://kb.mozillazine.org/Plain<br />
 [^2]: http://email.about.com/od/netiquettetips/qt/et070205.htm<br />
-[^roman]: http://stackoverflow.com/questions/267399/how<del>do</del>you<del>match</del>only<del>valid</del>roman<del>numerals</del>with<del>a</del>regular<br />
+[^roman]: http://stackoverflow.com/questions/267399/how<br />
 [^dokuwiki<br />
 [^creole-nowiki]: http://www.wikicreole.org/wiki/Creole1.0#section-Creole1.0-NowikiPreformatted<br />
