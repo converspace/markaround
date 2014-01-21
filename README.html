@@ -18,7 +18,6 @@
 
 <h2>Syntax</h2>
 
-
 <h3>Paragraphs and Line Breaks</h3>
 
 <p>Markaround:</p>
@@ -43,10 +42,12 @@ precede the newline with a backslash.
 &lt;/ul&gt;
 
 &lt;p&gt;Newlines&lt;br /&gt;
-are treated as line breaks. To stop this from happening precede the newline with a backslash.&lt;/p&gt;
+are treated as line breaks. To stop this from happening
+precede the newline with a backslash.&lt;/p&gt;
 </code></pre>
 
-Output:<br />
+<p>Output:</p>
+
 <p>This is a paragraph.</p>
 
 <p>This is another paragraph. One or more blank lines end paragraphs.</p>
@@ -55,8 +56,8 @@ Output:<br />
 </ul>
 
 Newlines<br />
-<p>are treated as line breaks. To stop this from happening 
-precede the newline with a backslash.</p>
+are treated as line breaks. To stop this from happening 
+precede the newline with a backslash.<br />
 
 
 <h3>Bold</h3>
@@ -130,16 +131,16 @@ precede the newline with a backslash.</p>
 </code></pre>
 
 
-<p>Fenced code blocks are better than markdown's indentation</p>
+<p>Fenced code blocks are better than markdown's indentation-based code-blocks because they:</p>
 <ul>
 <li>can begin and end with blank lines</li>
 <li>can be used immediately following a list</li>
 <li>allow for easy copy-pasting by not forcing indents</li>
 </ul>
 
-<p>Double single quotes was chosen over backticks because it looks more natural as a proxy for quoting literals. The double single quotes syntax was borrowed from Dokuwiki [^dokuwiki</p>
+<p>Double single quotes was chosen over backticks because it looks more natural as a proxy for quoting literals. The double single quotes syntax was borrowed from Dokuwiki [^dokuwiki-syntax].</p>
 
-<p>Using the same syntax for inline and block code was borrowed from Creole 1.0 [^creole</p>
+<p>Using the same syntax for inline and block code was borrowed from Creole 1.0 [^creole-nowiki]</p>
 
 
 <h3>Headers</h3>
@@ -203,6 +204,11 @@ Another Level 3
 <pre><code>
 &lt;hr /&gt;
 </code></pre>
+
+<p>Output:</p>
+
+<hr />
+
 
 
 <h3>Blockquotes</h3>
@@ -319,8 +325,8 @@ This is a code block
 
 <h2>References</h2>
 
-[^1]: http://kb.mozillazine.org/Plain<br />
+[^1]: http://kb.mozillazine.org/Plain_text_e-mail_-_Thunderbird#Structured_Text<br />
 [^2]: http://email.about.com/od/netiquettetips/qt/et070205.htm<br />
-[^roman]: http://stackoverflow.com/questions/267399/how<br />
-[^dokuwiki<br />
-[^creole-nowiki]: http://www.wikicreole.org/wiki/Creole1.0#section-Creole1.0-NowikiPreformatted<br />
+[^roman]: http://stackoverflow.com/questions/267399/how-do-you-match-only-valid-roman-numerals-with-a-regular-expression<br />
+[^dokuwiki-syntax]: https://www.dokuwiki.org/wiki:syntax#basic_text_formatting<br />
+[^creole-nowiki]: http://www.wikicreole.org/wiki/Creole1.0#section-Creole1.0-NowikiPreformatted
