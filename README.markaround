@@ -174,6 +174,10 @@ Another Level 2
 
 Another Level 3
 ~~~~~~~~~~~~~~~
+
+Not implemented yet:
+Forced H2
++++++++++{=2}
 ''
 
 HTML:
@@ -186,6 +190,8 @@ HTML:
 <h6 id="level_6">Level 6</h6>
 <h2 id="another_level_2">Another Level 2</h2>
 <h3 id="another_level_3">Another Level 3</h3>
+Not implemented yet:
+<h2 id="forced_h2">Forced H2</h2>
 ''
 
 
