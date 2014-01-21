@@ -1,5 +1,4 @@
 
-
 Markaround
 ==========
 
@@ -26,7 +25,7 @@ Markaround:
 This is a paragraph.
 
 This is another paragraph. One or more blank lines end paragraphs.
-* Lists also end paragraphs.
+* Lists, Code Blocks and Blockquotes also end paragraphs.
 
 Newlines
 are treated as line breaks. To stop this from happening precede the newline with a backslash.
@@ -38,7 +37,7 @@ HTML:
 
 <p>This is another paragraph. One or more blank lines end paragraphs.</p>
 <ul>
-<li>Lists also end paragraphs.</li>
+<li>Lists, Code Blocks and Blockquotes also end paragraphs.</li>
 </ul>
 
 <p>Newlines<br />
