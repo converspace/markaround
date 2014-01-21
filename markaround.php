@@ -49,9 +49,9 @@
 						}
 
 						$markaround .= "\n";
-						array_push($stack, '');
 					}
 					else {
+						$stack = array();
 						if (preg_match('/^([=\-~\.`"*+^_:#])\1{0,}$/', $line, $matches) and trim($previous_line)) {
 
 							$level = array_search($matches[1], $header_levels);
@@ -72,7 +72,6 @@
 								$markaround .= "<pre><code>\n";
 							}
 							$state = 'CODEBLOCK';
-
 						}
 						elseif (preg_match('/^\s*[*]\s+(.+)$/', $line, $matches)) {
 							$previous_line = span_elements_parser($previous_line);
@@ -91,7 +90,6 @@
 							if (trim($previous_line)) {
 								$previous_line = span_elements_parser($previous_line);
 								$markaround .= "$previous_line<br />\n";
-								$stack = array();
 							}
 							else {
 								array_push($stack, '');
