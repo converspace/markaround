@@ -28,8 +28,7 @@ This is another paragraph. One or more blank lines end paragraphs.
 * Lists also end paragraphs.
 
 Newlines
-are treated as line breaks. To stop this from happening \
-precede the newline with a backslash.
+are treated as line breaks. To stop this from happening precede the newline with a backslash.
 </code></pre>
 
 <p>HTML:</p>
@@ -42,8 +41,7 @@ precede the newline with a backslash.
 &lt;/ul&gt;
 
 &lt;p&gt;Newlines&lt;br /&gt;
-are treated as line breaks. To stop this from happening
-precede the newline with a backslash.&lt;/p&gt;
+are treated as line breaks. To stop this from happening precede the newline with a backslash.&lt;/p&gt;
 </code></pre>
 
 <p>Output:</p>
@@ -52,12 +50,11 @@ precede the newline with a backslash.&lt;/p&gt;
 
 <p>This is another paragraph. One or more blank lines end paragraphs.</p>
 <ul>
-<li>Lists also end paragraphs.</li>
+<li>Lists, Code Blocks and Blockquotes also end paragraphs.</li>
 </ul>
 
 Newlines<br />
-are treated as line breaks. To stop this from happening 
-precede the newline with a backslash.<br />
+are treated as line breaks. To stop this from happening precede the newline with a backslash.<br />
 
 
 <h3>Bold</h3>
@@ -219,12 +216,7 @@ Another Level 3
 &gt;
 &gt; This is the second paragraph.
 
-&gt; Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor \
-  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud \
-  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute \
-  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \
-  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia \
-  deserunt mollit anim id est laborum.
+&gt; Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 &gt;
 &gt; Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.
 &gt;
@@ -250,28 +242,63 @@ Another Level 3
 
 &lt;p&gt;This is the second paragraph.&lt;/p&gt;
 
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
 &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;
 
 &lt;p&gt;Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.&lt;/p&gt;
 
-&lt;h3&gt;Header&lt;/h3&gt;
+&lt;h1&gt;Header&lt;/h1&gt;
 
 &lt;ul&gt;
 &lt;li&gt;one&lt;/li&gt;
 &lt;li&gt;two&lt;/li&gt;
 &lt;li&gt;three&lt;/li&gt;
-&lt;ul&gt;
+&lt;/ul&gt;
 
 &lt;blockquote&gt;
-This is a  blockquote-in-a-blockquote.
-&lt;/blockquote&gt;
+&lt;p&gt;This is a  blockquote-in-a-blockquote.&lt;/p&gt;
 
+&lt;/blockquote&gt;
 &lt;pre&gt;&lt;code&gt;
 This is a code block
 &lt;/code&gt;&lt;/pre&gt;
 
+
 &lt;/blockquote&gt;
 </code></pre>
+
+<p>Output:</p>
+
+<blockquote>
+<p>This is a blockquote with two paragraphs.</p>
+
+<p>This is the second paragraph.</p>
+
+</blockquote>
+<blockquote>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+<p>Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.</p>
+
+<h1>Header</h1>
+
+<ul>
+<li>one</li>
+<li>two</li>
+<li>three</li>
+</ul>
+
+<blockquote>
+<p>This is a  blockquote-in-a-blockquote.</p>
+
+</blockquote>
+<pre><code>
+This is a code block
+</code></pre>
+
+
+</blockquote>
 
 <h3>Lists</h3>
 
