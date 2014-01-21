@@ -138,8 +138,16 @@
 		}
 
 		$previous_line = array_pop($stack);
+		$line_before_the_previous_line = array_pop($stack);
+
 		if (trim($previous_line)) {
-			$markaround .= "$previous_line";
+			$previous_line = span_elements_parser($previous_line);
+			if (!is_null($line_before_the_previous_line)) {
+				$markaround .= "<p>$previous_line</p>";
+			}
+			else {
+				$markaround .= $previous_line;
+			}
 		}
 
 		return $markaround;
