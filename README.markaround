@@ -74,7 +74,7 @@ Italics
 
 Markaround: ''_italics_''
 
-HTML: ''<em>italics<em>''
+HTML: ''<em>italics</em>''
 
 Output: _italics_
 
@@ -84,7 +84,7 @@ Strikethrough
 
 Markaround: ''-strikethrough-''
 
-HTML: ''<del>strikethrough<del>''
+HTML: ''<del>strikethrough</del>''
 
 Output: -strikethrough-
 
@@ -96,7 +96,7 @@ Double single quotes are used for both inline code and code blocks.
 
 Markaround: ''Here is some \'\'code\'\' you can use''
 
-HTML: ''Here is some <code>code<code> you can use''
+HTML: ''Here is some <code>code</code> you can use''
 
 Output: Here is some ''code'' you can use.
 
