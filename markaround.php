@@ -13,6 +13,12 @@
 		$str = str_replace("\t", str_repeat(' ', 4), $str);
 		$lines = explode("\n", $str);
 
+		return block_elements_parser($lines);
+	}
+
+
+	function block_elements_parser($lines) {
+
 		$markaround = '';
 		$stack = array();
 		$header_levels = array();
@@ -32,7 +38,7 @@
 
 						elseif (trim($previous_line)) {
 
-							//$previous_line = inline_parser($previous_line);
+							$previous_line = span_elements_parser($previous_line);
 
 							if (!is_null($line_before_the_previous_line)) {
 								$markaround .= "<p>$previous_line</p>\n";
@@ -60,7 +66,7 @@
 						}
 						elseif (preg_match('/^\s*\'\'\s*$/', $line)) {
 							if (trim($previous_line)) {
-								//$previous_line = inline_parser($previous_line);
+								$previous_line = span_elements_parser($previous_line);
 								$markaround .= "<p>$previous_line</p>\n<pre><code>\n";
 							}
 							else {
@@ -70,7 +76,7 @@
 
 						}
 						elseif (preg_match('/^\s*[*]\s+(.+)$/', $line, $matches)) {
-							//$previous_line = inline_parser($previous_line);
+							$previous_line = span_elements_parser($previous_line);
 							$markaround .= "<p>$previous_line</p>\n<ul>\n<li>{$matches[1]}</li>\n";
 							$state = 'UL';
 						}
@@ -82,7 +88,7 @@
 										$line = substr($previous_line, 0, -1)."\n$line";
 								}
 								else {
-										//$previous_line = inline_parser($previous_line);
+										$previous_line = span_elements_parser($previous_line);
 										$markaround .= "$previous_line<br />\n";
 										$stack = array();
 								}
@@ -126,137 +132,95 @@
 		return $markaround;
 	}
 
-	function inline_parser($str) {
+
+	function span_elements_parser($str) {
 
 		$markaround = '';
 		$token = '';
-		$word_start_boundry = array(' ', '"', "'", '(', '{', '[');
-		$word_end_boundry = array(' ', '.', ',', ';', ':', '"', "'", '?', '!', ')', '}', ']');
+		$stack = array();
 		$state = 'START';
 
 		foreach (str_split($str) as $char) {
 			switch ($state) {
 				case 'START':
-					if ('_' == $char) {
-						$state = 'EM_START';
+					$previous_char = array_pop($stack);
+
+					$non_word_char_regex = '/[^A-Za-z0-9\-_]/';
+
+					if (('_' == $char) and preg_match($non_word_char_regex, $previous_char)) {
+						$state = 'EM';
 					}
-					elseif ('*' == $char) {
-						$state = 'STRONG_START';
+					elseif (('*' == $char) and preg_match($non_word_char_regex, $previous_char)) {
+						$state = 'STRONG';
 					}
-					elseif ('-' == $char) {
-						$state = 'DEL_START';
+					elseif (('-' == $char) and preg_match($non_word_char_regex, $previous_char)) {
+						$state = 'DEL';
 					}
-					elseif ("'" == $char) {
+					elseif (("'" == $char) and preg_match($non_word_char_regex, $previous_char)) {
 						$state = 'CODE_START_MAYBE';
 					}
 					else {
-						$state = 'START';
 						$markaround .= $char;
 					}
+					array_push($stack, $char);
 					break;
-				case 'NOFORMAT':
-					if (in_array($char, $word_start_boundry)) {
-						$state = 'START';
-						$markaround .= $char;
-					}
-					else $markaround .= $char;
-					break;
-				case 'EM_START':
+				case 'EM':
 					if ('_' == $char) {
-						$state = 'EM_END_MAYBE';
+						$markaround .= "<em>$token</em>";
+						$token = '';
+						$state = 'START';
 					}
 					else $token .= $char;
 					break;
-				case 'EM_END_MAYBE':
-					if (in_array($char, $word_end_boundry)) {
-						$state = 'NOFORMAT';
-						$token = str_replace("\\_", "_", $token);
-						$markaround .= "<em>$token</em>$char";
-						$token = '';
-					}
-					else {
-						$state = 'EM_START';
-						$token .= '_'.$char;
-					}
-					break;
-				case 'STRONG_START':
+				case 'STRONG':
 					if ('*' == $char) {
-						$state = 'STRONG_END_MAYBE';
+						$markaround .= "<strong>$token</strong>";
+						$token = '';
+						$state = 'START';
 					}
 					else $token .= $char;
 					break;
-				case 'STRONG_END_MAYBE':
-					if (in_array($char, $word_end_boundry)) {
-						$state = 'NOFORMAT';
-						$token = str_replace("\\*", "*", $token);
-						$markaround .= "<strong>$token</strong>$char";
-						$token = '';
-					}
-					else {
-						$state = 'STRONG_START';
-						$token .= '*'.$char;
-					}
-					break;
-				case 'DEL_START':
+				case 'DEL':
 					if ('-' == $char) {
-						$state = 'DEL_END_MAYBE';
+						$markaround .= "<del>$token</del>";
+						$token = '';
+						$state = 'START';
 					}
 					else $token .= $char;
-					break;
-				case 'DEL_END_MAYBE':
-					if (in_array($char, $word_end_boundry)) {
-						$state = 'NOFORMAT';
-						$token = str_replace("\\-", "-", $token);
-						$markaround .= "<del>$token</del>$char";
-						$token = '';
-					}
-					else {
-						$state = 'DEL_START';
-						$token .= '-'.$char;
-					}
 					break;
 				case 'CODE_START_MAYBE':
 					if ("'" == $char) {
-						$state = 'CODE_START';
+						$state = 'CODE';
 					}
 					else {
-						$state = 'NOFORMAT';
+						$state = 'START';
 						$markaround .= "'".$char;
 					}
 					break;
-				case 'CODE_START':
-					if ("'" == $char) {
-						$state = 'CODE_END_START';
-					}
-					else $token .= $char;
-					break;
-				case 'CODE_END_START':
+				case 'CODE':
 					if ("'" == $char) {
 						$state = 'CODE_END_MAYBE';
 					}
-					else {
-						$state = 'CODE_START';
-						$token .= "'".$char;
-					}
+					else $token .= $char;
 					break;
 				case 'CODE_END_MAYBE':
-					if (in_array($char, $word_end_boundry)) {
-						$state = 'NOFORMAT';
+					if ("'" == $char) {
 						$token = htmlspecialchars($token);
 						$token = str_replace("\\'", "'", $token);
-						$markaround .= "<code>$token</code>$char";
+						$markaround .= "<code>$token</code>";
 						$token = '';
+						$state = 'START';
 					}
 					else {
-						$state = 'CODE_START';
+						$state = 'CODE';
 						$token .= "'".$char;
 					}
 					break;
 			}
 		}
 
-		if (preg_match('/([A-Z]+)_END_MAYBE/', $state, $matches)) {
-			$tag = strtolower($matches[1]);
+		if (in_array($state, array('EM', 'STRONG', 'DEL', 'CODE'))) {
+			$tag = strtolower($state);
 			if ('code' == $tag) {
 				$token = htmlspecialchars($token);
 				$token = str_replace("\\'", "'", $token);
