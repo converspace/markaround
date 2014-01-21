@@ -147,10 +147,13 @@
 				case 'START':
 					$previous_char = array_pop($stack);
 					if (is_null($previous_char)) $previous_char = ' ';
-
 					$non_word_char_regex = '/[^A-Za-z0-9\-_]/';
 
-					if (('_' == $char) and preg_match($non_word_char_regex, $previous_char)) {
+					if ('\\' == $char) {
+						$state = 'ESCAPE';
+						$last_state = 'START';
+					}
+					elseif (('_' == $char) and preg_match($non_word_char_regex, $previous_char)) {
 						$state = 'EM';
 					}
 					elseif (('*' == $char) and preg_match($non_word_char_regex, $previous_char)) {
@@ -168,7 +171,8 @@
 					array_push($stack, $char);
 					break;
 				case 'ESCAPE':
-					$token .= $char;
+					if ('START' == $last_state) $markaround .= $char;
+					else $token .= $char;
 					$state = $last_state;
 					break;
 				case 'EM':
@@ -219,6 +223,10 @@
 				case 'CODE':
 					if ("'" == $char) {
 						$state = 'CODE_END_MAYBE';
+					}
+					elseif ('\\' == $char) {
+						$state = 'ESCAPE';
+						$last_state = 'CODE';
 					}
 					else $token .= $char;
 					break;

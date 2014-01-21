@@ -8,9 +8,19 @@
 
 		// Escaping
 		should_return('<strong>bo*ld</strong>', when_passed('*bo\*ld*'));
+		should_return('*bold*', when_passed('\*bold\*'));
+
 		should_return('<em>ital_ics</em>', when_passed('_ital\_ics_'));
+		should_return('_italics_', when_passed('\_italics\_'));
+
 		should_return('<del>strike-through</del>', when_passed('-strike\-through-'));
+		should_return('-strikethrough-', when_passed('\-strikethrough\-'));
+
 		should_return("<code>co''de</code>", when_passed("''co\'\'de''"));
+		should_return("''code''", when_passed("\'\'code\'\'"));
+
+		//TODO: Why does this pass?
+		should_return("''code'", when_passed("\''code\''"));
 	}
 
 ?>
