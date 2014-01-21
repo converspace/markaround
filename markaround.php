@@ -36,14 +36,12 @@
 						if (preg_match('/^-+\s*$/', $previous_line) and !trim($line_before_the_previous_line)) {
 							$markaround .= "<hr />\n\n";
 						}
-
 						elseif (trim($previous_line)) {
 
 							$previous_line = span_elements_parser($previous_line);
 
 							if (!is_null($line_before_the_previous_line)) {
 								$markaround .= "<p>$previous_line</p>\n";
-								$stack = array();
 							}
 							else {
 								$markaround .= "$previous_line<br />\n";
@@ -63,7 +61,6 @@
 							}
 							$level = $level + 1;
 							$markaround .= "<h$level>$previous_line</h$level>\n";
-							$stack = array();
 						}
 						elseif (preg_match('/^\s*\'\'\s*$/', $line)) {
 							if (trim($previous_line)) {
