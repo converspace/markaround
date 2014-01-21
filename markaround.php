@@ -4,7 +4,7 @@
 // TODO: OL
 // TODO: Multi line lists and other nested block elements
 // TODO: Nested span elements
-// TODO: header attributes
+// TODO: header attributes and forced level
 // TODO: code block attributes
 
 	function markaround($str) {
