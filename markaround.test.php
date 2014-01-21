@@ -6,6 +6,12 @@
 		should_return('<del>strikethrough</del>', when_passed('-strikethrough-'));
 		should_return('<code>code</code>', when_passed("''code''"));
 
+		// Text styling should not work for partial words.
+		should_return('shouldnot*bold*', when_passed('shouldnot*bold*'));
+		// TODO: Pass this test:
+		should_return('*bold*face', when_passed('*bold*face'));
+
+
 		// Escaping
 		should_return('<strong>bo*ld</strong>', when_passed('*bo\*ld*'));
 		should_return('*bold*', when_passed('\*bold\*'));
