@@ -1,31 +1,31 @@
 
-
 <h1>Markaround</h1>
+
 
 <p>Markaround is a plain text formatting syntax for writing for the web.</p>
 
 <p>It is a better Markdown (at least for me) with:</p>
-<ul>
-<li>one and only one way to do something (I'm looking at you Markdown headers, lists and emphasis)</li>
+<ul><li>one and only one way to do something (I'm looking at you Markdown headers, lists and emphasis)</li>
 <li>intuitive emphasis (closer to what's used in plain text email) [^1][^2]</li>
 <li>intuitive line breaks (newline = line break)</li>
 <li>syntax for strikethrough (because you always change your mind and/or make mistakes)</li>
 <li>more readable header syntax</li>
 <li>consistent linking syntax</li>
-<li>code block syntax designed for easy copy-pasting in the common case</li>
-</ul>
+<li>code block syntax designed for easy copy-pasting in the common case</li></ul>
 
 
 <h2>Syntax</h2>
 
+
 <h3>Paragraphs and Line Breaks</h3>
+
 
 <p>Markaround:</p>
 <pre><code>
 This is a paragraph.
 
 This is another paragraph. One or more blank lines end paragraphs.
-* Lists also end paragraphs.
+* Lists, Code Blocks and Blockquotes also end paragraphs.
 
 Newlines
 are treated as line breaks. To stop this from happening precede the newline with a backslash.
@@ -37,7 +37,7 @@ are treated as line breaks. To stop this from happening precede the newline with
 
 &lt;p&gt;This is another paragraph. One or more blank lines end paragraphs.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Lists also end paragraphs.&lt;/li&gt;
+&lt;li&gt;Lists, Code Blocks and Blockquotes also end paragraphs.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Newlines&lt;br /&gt;
@@ -49,15 +49,15 @@ are treated as line breaks. To stop this from happening precede the newline with
 <p>This is a paragraph.</p>
 
 <p>This is another paragraph. One or more blank lines end paragraphs.</p>
-<ul>
-<li>Lists, Code Blocks and Blockquotes also end paragraphs.</li>
-</ul>
+<ul><li>Lists, Code Blocks and Blockquotes also end paragraphs.</li></ul>
 
-Newlines<br />
-are treated as line breaks. To stop this from happening precede the newline with a backslash.<br />
+<p>Newlines<br />
+are treated as line breaks. To stop this from happening 
+precede the newline with a backslash.</p>
 
 
 <h3>Bold</h3>
+
 
 <p>Markaround: <code>*bold*</code></p>
 
@@ -68,6 +68,7 @@ are treated as line breaks. To stop this from happening precede the newline with
 
 <h3>Italics</h3>
 
+
 <p>Markaround: <code>_italics_</code></p>
 
 <p>HTML: <code>&lt;em&gt;italics&lt;/em&gt;</code></p>
@@ -77,6 +78,7 @@ are treated as line breaks. To stop this from happening precede the newline with
 
 <h3>Strikethrough</h3>
 
+
 <p>Markaround: <code>-strikethrough-</code></p>
 
 <p>HTML: <code>&lt;del&gt;strikethrough&lt;/del&gt;</code></p>
@@ -85,6 +87,7 @@ are treated as line breaks. To stop this from happening precede the newline with
 
 
 <h3>Code and Code Blocks</h3>
+
 
 <p>Double single quotes are used for both inline code and code blocks.</p>
 
@@ -129,11 +132,9 @@ are treated as line breaks. To stop this from happening precede the newline with
 
 
 <p>Fenced code blocks are better than markdown's indentation-based code-blocks because they:</p>
-<ul>
-<li>can begin and end with blank lines</li>
+<ul><li>can begin and end with blank lines</li>
 <li>can be used immediately following a list</li>
-<li>allow for easy copy-pasting by not forcing indents</li>
-</ul>
+<li>allow for easy copy-pasting by not forcing indents</li></ul>
 
 <p>Double single quotes was chosen over backticks because it looks more natural as a proxy for quoting literals. The double single quotes syntax was borrowed from Dokuwiki [^dokuwiki-syntax].</p>
 
@@ -141,6 +142,7 @@ are treated as line breaks. To stop this from happening precede the newline with
 
 
 <h3>Headers</h3>
+
 
 <p>Any of the following characters can be used as the underline: <code>= - ~ . ` &quot; * + ^ _ : #</code></p>
 
@@ -195,6 +197,7 @@ Forced H2
 
 <h3>Horizontal Rule</h3>
 
+
 <p>One or more hyphens on a line surounded by blank lines.</p>
 
 <p>Markaround:</p>
@@ -214,8 +217,8 @@ Forced H2
 <hr />
 
 
-
 <h3>Blockquotes</h3>
+
 
 <p>Markaround:</p>
 <pre><code>
@@ -223,7 +226,12 @@ Forced H2
 &gt;
 &gt; This is the second paragraph.
 
-&gt; Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+&gt; Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor \
+  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud \
+  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute \
+  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia \
+  deserunt mollit anim id est laborum.
 &gt;
 &gt; Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.
 &gt;
@@ -277,37 +285,36 @@ This is a code block
 
 <p>Output:</p>
 
-<blockquote>
-<p>This is a blockquote with two paragraphs.</p>
+<blockquote><p>This is a blockquote with two paragraphs.</p>
 
-<p>This is the second paragraph.</p>
+<p>This is the second paragraph.</p></blockquote>
 
-</blockquote>
-<blockquote>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
+  incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
+  exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
+  irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+  deserunt mollit anim id est laborum.</p>
 
 <p>Blockquotes can also contain other block level elements like headers, lists, blockquotes and code blocks.</p>
 
 <h1>Header</h1>
 
-<ul>
-<li>one</li>
+
+<ul><li>one</li>
 <li>two</li>
-<li>three</li>
-</ul>
+<li>three</li></ul>
 
-<blockquote>
-<p>This is a  blockquote-in-a-blockquote.</p>
+<blockquote><p>This is a  blockquote-in-a-blockquote.</p></blockquote>
 
-</blockquote>
 <pre><code>
 This is a code block
 </code></pre>
-
-
 </blockquote>
 
+
 <h3>Lists</h3>
+
 
 <p>Markaround:</p>
 <pre><code>
@@ -359,8 +366,9 @@ This is a code block
 
 <h2>References</h2>
 
-[^1]: http://kb.mozillazine.org/Plain_text_e-mail_-_Thunderbird#Structured_Text<br />
+
+<p>[^1]: http://kb.mozillazine.org/Plain_text_e-mail_-_Thunderbird#Structured_Text<br />
 [^2]: http://email.about.com/od/netiquettetips/qt/et070205.htm<br />
 [^roman]: http://stackoverflow.com/questions/267399/how-do-you-match-only-valid-roman-numerals-with-a-regular-expression<br />
 [^dokuwiki-syntax]: https://www.dokuwiki.org/wiki:syntax#basic_text_formatting<br />
-[^creole-nowiki]: http://www.wikicreole.org/wiki/Creole1.0#section-Creole1.0-NowikiPreformatted
+[^creole-nowiki]: http://www.wikicreole.org/wiki/Creole1.0#section-Creole1.0-NowikiPreformatted</p>

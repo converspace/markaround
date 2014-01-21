@@ -6,12 +6,19 @@
 // TODO: header attributes and forced level
 // TODO: code block attributes
 
+	define('HEADER_UNDERLINE', '/^([=\-~\.`"*+^_:#])\1{0,}$/');
+	define('CODEBLOCK',        '/^\s*\'\'\s*$/');
+	define('UL',               '/^\s*[*]\s+(.+)$/');
+	define('BLOCKQUOTE',       '/^\s*[>]\s*(.*)$/');
+	define('HR',               '/^-+\s*$/');
+
+	function is_blank($str) { return (!trim($str)); }
+
 	function markaround($str) {
 
 		$str = str_replace("\r\n", "\n", $str);
 		$str = str_replace("\r", "\n", $str);
 		$str = str_replace("\t", str_repeat(' ', 4), $str);
-		$str = preg_replace("/\s*\\\\\n\s*/m", ' ', $str); // collapse lines ending in \
 		$lines = explode("\n", $str);
 		return block_elements_parser($lines);
 	}
@@ -20,87 +27,89 @@
 	function block_elements_parser($lines) {
 
 		$markaround = '';
-		$stack = array();
 		$header_levels = array();
-		$blockquote = '';
+		$paragraph = '';
 		$state = 'START';
 
 		foreach($lines as $line) {
+
 			switch ($state) {
+
 				case 'START':
-					$previous_line = array_pop($stack);
-
-					if (!trim($line)) {
-						$line_before_the_previous_line = array_pop($stack);
-
-						if (preg_match('/^-+\s*$/', $previous_line) and !trim($line_before_the_previous_line)) {
-							$markaround .= "<hr />\n\n";
+					if (is_blank($line)) {
+						if (!empty($paragraph)) {
+							$paragraph = span_elements_parser($paragraph);
+							$markaround .= "<p>$paragraph</p>\n";
 						}
-						elseif (trim($previous_line)) {
-
-							$previous_line = span_elements_parser($previous_line);
-
-							if (!is_null($line_before_the_previous_line)) {
-								$markaround .= "<p>$previous_line</p>\n";
-							}
-							else {
-								$markaround .= "$previous_line<br />\n";
-							}
-						}
-
 						$markaround .= "\n";
+						$paragraph = '';
 					}
 					else {
-						$stack = array();
-						if (preg_match('/^([=\-~\.`"*+^_:#])\1{0,}$/', $line, $matches) and trim($previous_line)) {
+						if (preg_match(HR, $line)) {
+							if (empty($paragraph)) {
+								$state = 'HR';
+							}
+						}
+					NON_BLANK_LINE:
+						if (preg_match(HEADER_UNDERLINE, $line, $matches)) {
+							if (!empty($paragraph)) {
 
-							$level = array_search($matches[1], $header_levels);
-							if (false === $level) {
-								array_push($header_levels, $matches[1]);
 								$level = array_search($matches[1], $header_levels);
+								if (false === $level) {
+										array_push($header_levels, $matches[1]);
+										$level = array_search($matches[1], $header_levels);
+								}
+								$level = $level + 1;
+								$markaround .= "<h$level>$paragraph</h$level>\n\n";
+								$paragraph = '';
 							}
-							$level = $level + 1;
-							$markaround .= "<h$level>$previous_line</h$level>\n";
 						}
-						elseif (preg_match('/^\s*\'\'\s*$/', $line)) {
-							if (trim($previous_line)) {
-								$previous_line = span_elements_parser($previous_line);
-								if (trim($previous_line)) $previous_line = "<p>$previous_line</p>\n";
-								$markaround .= "$previous_line<pre><code>\n";
-							}
-							else {
-								$markaround .= "<pre><code>\n";
-							}
+						elseif (preg_match(CODEBLOCK, $line, $matches)) {
+							if (!empty($paragraph)) $markaround .= "<p>$paragraph</p>\n";
+							$paragraph = '';
 							$state = 'CODEBLOCK';
+							$markaround .= "<pre><code>\n";
 						}
-						elseif (preg_match('/^\s*[*]\s+(.+)$/', $line, $matches)) {
-							$previous_line = span_elements_parser($previous_line);
-							if (trim($previous_line)) $previous_line = "<p>$previous_line</p>\n";
-							$markaround .= "$previous_line<ul>\n<li>{$matches[1]}</li>\n";
-							$state = 'UL';
-						}
-						elseif (preg_match('/^\s*[>]\s+(.+)$/', $line, $matches)) {
-							$inside_blockquote = true;
-							if (trim($previous_line)) $previous_line = "<p>$previous_line</p>\n";
-							$markaround .= "$previous_line<blockquote>\n";
-							$blockquote = "{$matches[1]}\n";
+						elseif (preg_match(BLOCKQUOTE, $line, $matches)) {
+							if (!empty($paragraph)) $markaround .= "<p>$paragraph</p>\n";
+							$paragraph = "{$matches[1]}";
 							$state = 'BLOCKQUOTE';
+							$markaround .= "<blockquote>";
+						}
+						elseif (preg_match(UL, $line, $matches)) {
+							if (!empty($paragraph)) $markaround .= "<p>$paragraph</p>\n";
+							$paragraph = '';
+							$state = 'UL';
+							$markaround .= "<ul><li>{$matches[1]}</li>";
 						}
 						else {
-							if (trim($previous_line)) {
-								$previous_line = span_elements_parser($previous_line);
-								$markaround .= "$previous_line<br />\n";
+							if (!empty($paragraph)) {
+								if ('\\' == substr($paragraph, -1)) {
+									$paragraph = substr($paragraph, 0, -1)."\n$line";
+								}
+								else {
+									$paragraph .= "<br />\n$line";
+								}
 							}
-							else {
-								array_push($stack, '');
-							}
-
-							array_push($stack, $line);
+							else $paragraph .= $line;
 						}
 					}
 					break;
+
+				case 'HR':
+					if (is_blank($line)) {
+						$markaround .= "<hr />\n\n";
+						$state = 'START';
+					}
+					else {
+						$paragraph = '';
+						$state = 'START';
+						goto NON_BLANK_LINE;
+					}
+					break;
+
 				case 'CODEBLOCK':
-					if (preg_match('/^\s*\'\'\s*$/', $line)) {
+					if (preg_match(CODEBLOCK, $line)) {
 						$markaround .= "</code></pre>\n";
 						$state = 'START';
 					}
@@ -110,40 +119,48 @@
 						$markaround .= "$line\n";
 					}
 					break;
-				case 'UL':
-					if (preg_match('/^\s*[*]\s+(.+)$/', $line, $matches)) {
-						$markaround .= "<li>{$matches[1]}</li>\n";
-					}
-					elseif (!trim($line)) {
-						$markaround .= "</ul>\n\n";
-						$state = 'START';
-					}
-					break;
+
 				case 'BLOCKQUOTE':
-					if (preg_match('/^\s*[>]\s*(.*)$/', $line, $matches)) {
-						$blockquote .= "{$matches[1]}\n";
+					if (preg_match(BLOCKQUOTE, $line, $matches)) {
+						$paragraph .= "\n{$matches[1]}";
+					}
+					elseif ('\\' == substr($paragraph, -1)) {
+						$paragraph .= "\n$line";
 					}
 					else {
-						$markaround .= block_elements_parser(explode("\n", $blockquote))."</blockquote>\n";
-						$blockquote = '';
+						$paragraph = block_elements_parser(explode("\n", $paragraph));
+						if ("\n" == substr($paragraph, -1)) $paragraph = substr($paragraph, 0, -1);
+						$markaround .= "$paragraph</blockquote>\n";
+						$paragraph = '';
 						$state = 'START';
+						if (is_blank($line)) {
+							$markaround .= "\n";
+						}
+						else {
+							goto NON_BLANK_LINE;
+						}
+					}
+					break;
+
+				case 'UL':
+					if (preg_match(UL, $line, $matches)) {
+						$markaround .= "\n<li>{$matches[1]}</li>";
+					}
+					else {
+						$markaround .= "</ul>\n";
+						$state = 'START';
+						if (is_blank($line)) {
+							$markaround .= "\n";
+						}
+						else {
+							goto NON_BLANK_LINE;
+						}
 					}
 					break;
 			}
 		}
 
-		$previous_line = array_pop($stack);
-		$line_before_the_previous_line = array_pop($stack);
-
-		if (trim($previous_line)) {
-			$previous_line = span_elements_parser($previous_line);
-			if (!is_null($line_before_the_previous_line)) {
-				$markaround .= "<p>$previous_line</p>";
-			}
-			else {
-				$markaround .= $previous_line;
-			}
-		}
+		if (!empty($paragraph)) $markaround .= "<p>$paragraph</p>";
 
 		return $markaround;
 	}
