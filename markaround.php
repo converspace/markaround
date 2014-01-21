@@ -1,6 +1,5 @@
 <?php
 
-// TODO: Blockquotes
 // TODO: OL
 // TODO: Multi line lists and other nested block elements
 // TODO: Nested span elements
