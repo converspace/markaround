@@ -1,6 +1,18 @@
 <?php
 
+	function test_block_elements_parser() {
+
+		should_return("\n<hr />\n\n", when_passed(array('', '-', '')));
+		should_return("<hr />\n\n", when_passed(array('-', '')));
+
+		should_return("<h1>HEADER</h1>\n\n", when_passed(array('HEADER', '-')));
+		should_return("<h1>HEADER</h1>\n\n\n", when_passed(array('HEADER', '-', '')));
+		should_return("<h1>HEADER</h1>\n\n<p>PARA</p>", when_passed(array('HEADER', '-', 'PARA')));
+		should_return("<h1>HEADER<br />\nCONTINUED</h1>\n\n<p>PARA</p>", when_passed(array('HEADER', 'CONTINUED', '-', 'PARA')));
+	}
+
 	function test_span_elements_parser() {
+
 		should_return('<strong>bold</strong>', when_passed('*bold*'));
 		should_return('<em>italics</em>', when_passed('_italics_'));
 		should_return('<del>strikethrough</del>', when_passed('-strikethrough-'));
@@ -27,6 +39,7 @@
 
 		//TODO: Why does this pass?
 		should_return("''code'", when_passed("\''code\''"));
+
 	}
 
 ?>
