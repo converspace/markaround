@@ -85,10 +85,9 @@
 						}
 						elseif (preg_match('/^\s*[>]\s+(.+)$/', $line, $matches)) {
 							$inside_blockquote = true;
-							$line = $matches[1];
 							if (trim($previous_line)) $previous_line = "<p>$previous_line</p>\n";
 							$markaround .= "$previous_line<blockquote>\n";
-							$blockquote = "$line\n";
+							$blockquote = "{$matches[1]}\n";
 							$state = 'BLOCKQUOTE';
 						}
 						else {
