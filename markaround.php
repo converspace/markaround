@@ -1,10 +1,10 @@
 <?php
 
+// TODO: Blockquotes
 // TODO: OL
 // TODO: Multi line lists and other nested block elements
 // TODO: header attributes
 // TODO: code block attributes
-// TODO: Blockquotes
 
 	function markaround($str) {
 
@@ -144,6 +144,7 @@
 			switch ($state) {
 				case 'START':
 					$previous_char = array_pop($stack);
+					if (is_null($previous_char)) $previous_char = ' ';
 
 					$non_word_char_regex = '/[^A-Za-z0-9\-_]/';
 
