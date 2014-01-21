@@ -3,6 +3,7 @@
 // TODO: Blockquotes
 // TODO: OL
 // TODO: Multi line lists and other nested block elements
+// TODO: Nested span elements
 // TODO: header attributes
 // TODO: code block attributes
 
@@ -138,6 +139,7 @@
 		$markaround = '';
 		$token = '';
 		$stack = array();
+		$last_state = '';
 		$state = 'START';
 
 		foreach (str_split($str) as $char) {
@@ -165,11 +167,19 @@
 					}
 					array_push($stack, $char);
 					break;
+				case 'ESCAPE':
+					$token .= $char;
+					$state = $last_state;
+					break;
 				case 'EM':
 					if ('_' == $char) {
 						$markaround .= "<em>$token</em>";
 						$token = '';
 						$state = 'START';
+					}
+					elseif ('\\' == $char) {
+						$state = 'ESCAPE';
+						$last_state = 'EM';
 					}
 					else $token .= $char;
 					break;
@@ -179,6 +189,10 @@
 						$token = '';
 						$state = 'START';
 					}
+					elseif ('\\' == $char) {
+						$state = 'ESCAPE';
+						$last_state = 'STRONG';
+					}
 					else $token .= $char;
 					break;
 				case 'DEL':
@@ -186,6 +200,10 @@
 						$markaround .= "<del>$token</del>";
 						$token = '';
 						$state = 'START';
+					}
+					elseif ('\\' == $char) {
+						$state = 'ESCAPE';
+						$last_state = 'DEL';
 					}
 					else $token .= $char;
 					break;
