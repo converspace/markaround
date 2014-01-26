@@ -1,5 +1,5 @@
 
-= Markaround
+# Markaround
 
 Markaround is a shorthand replacement for the most commonly used subset of HTML used for writing on the web.
 
