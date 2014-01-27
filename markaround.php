@@ -1,13 +1,16 @@
 <?php
 
+// TODO: Links
 // TODO: single line list items shouldn't be wrapped in a <p> tag.
-// TODO: generate header id
-// TODO: handle indentation inside code blocks
-// TODO: trim spaces on newline escape
 // TODO: line break (<br />) handling inside blockquotes
+// TODO: handle indented code blocks
+// TODO: trim spaces on newline escape
 // TODO: Nested span elements like  *_bold italics_*
+// TODO: generate header id
 // TODO: header attributes {#level4 .class1 .class2}
 // TODO: code block attributes {#example1 .php} => <pre id="example1" class="php">
+// TODO: images and vid embeds
+// TODO: ad hoc span elements
 
 
 	define('HEADER',         '/^(=+)\s+(.+)$/');
