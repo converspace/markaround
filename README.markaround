@@ -155,11 +155,11 @@ Markaround:
 Two single quotes on a line by themselves mark the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.
 
 Here is some code:
-	\'\'
-    <?php
-      echo "Hello World";
-    ?>
-    \'\'
+  ''
+  <?php
+  echo "Hello World";
+  ?>
+  ''
 ''
 
 HTML:
