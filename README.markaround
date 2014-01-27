@@ -43,7 +43,7 @@ HTML: ''<p>Enclose words in hypen to mark them as <del>deleted</del>.</p>''
 
 Enclose words in two single quotes to make them ''monospaced''.
 
-Markdown: ''Enclose words in two single quotes to make them '\\'monospaced\'\'.''
+Markdown: ''Enclose words in two single quotes to make them \'\'monospaced\'\'.''
 HTML: ''<p>Enclose words in two single quotes to make them <code>monospaced</code>.</p>''
 
 Two single quotes are also used for code block. See Code Blocks section below.
