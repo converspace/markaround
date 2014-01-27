@@ -218,11 +218,9 @@ HTML:
 * Unordered list items start with an asterisk and ordered list items start with a hash.
 
 * A blank line or another block element will end a list.
-* To wrap list item contents in a <p> tag, leave a blank line after the list item like so
-|
 * Lists can also contain other block level elements including other lists.
 |
-| Just connect all the lines of a list item by starting them lines with a pipe character folowed by a space, aka the list continuation marker.
+| Just connect all the lines of a list item by starting them with a pipe character folowed by a space, aka the list continuation marker.
 |
 | = Header
 |
@@ -235,7 +233,9 @@ HTML:
 | ''
 | This is a code block
 | ''
-
+|
+* To wrap list item contents in a <p> tag, leave a blank line after the list item like so
+|
 
 
 

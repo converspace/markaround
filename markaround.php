@@ -1,5 +1,6 @@
 <?php
 
+// TODO: single line list items shouldn't be wrapped in a <p> tag.
 // TODO: generate header id
 // TODO: handle indentation inside code blocks
 // TODO: trim spaces on newline escape
