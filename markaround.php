@@ -207,11 +207,11 @@
 			$markaround .= "<p>$paragraph</p>";
 		}
 		if (('CODEBLOCK' == $state) and !empty($paragraph)) {
-			$markaround .= "</code></pre>\n";
+			$markaround .= "</code></pre>";
 		}
 		elseif (('BLOCKQUOTE' == $state) and !empty($paragraph)) {
 			$paragraph = block_elements_parser($paragraph);
-			$markaround .= "$paragraph</blockquote>\n";
+			$markaround .= "$paragraph</blockquote>";
 		}
 		elseif (('LIST' == $state) and !empty($paragraph)) {
 			$paragraph = block_elements_parser($paragraph);
