@@ -16,23 +16,22 @@
 	define('HEADER',         '/^(=+)\s+(.+)$/');
 	define('CODEBLOCK',      '/^\s*\'\'\s*$/');
 	define('LIST_START',     '/^([*#])\s(.+)$/');
-	//define('LIST_CONTINUED', '/^\|(\s*|\s(.+))$/');
 	define('LIST_CONTINUED', '/^\|\s*(.*)$/');
 	define('BLOCKQUOTE',     '/^\s*[>]\s*(.*)$/');
 	define('HR',             '/^-+\s*$/');
 
 
 	function markaround($str) {
-
 		$str = str_replace("\r\n", "\n", $str);
 		$str = str_replace("\r", "\n", $str);
 		$str = str_replace("\t", str_repeat(' ', 4), $str);
-		$lines = explode("\n", $str);
-		return block_elements_parser($lines);
+		return block_elements_parser($str);
 	}
 
 
-	function block_elements_parser($lines) {
+	function block_elements_parser($str) {
+
+		$lines = explode("\n", $str);
 
 		$markaround = '';
 		$paragraph = '';
@@ -96,7 +95,6 @@
 					}
 
 					if (preg_match(BLOCKQUOTE, $line, $matches)) {
-
 						if (!empty($paragraph)) {
 							$paragraph = span_elements_parser($paragraph);
 							$markaround .= "<p>$paragraph</p>\n";
@@ -122,6 +120,7 @@
 						break;
 					}
 
+					$line = htmlspecialchars($line);
 
 					if (empty($paragraph)) {
 						$paragraph = $line;
@@ -157,7 +156,7 @@
 						$paragraph .= "\n{$matches[1]}";
 					}
 					else {
-						$paragraph = block_elements_parser(explode("\n", $paragraph));
+						$paragraph = block_elements_parser($paragraph);
 						if ("\n" == substr($paragraph, -1)) $paragraph = substr($paragraph, 0, -1);
 						$markaround .= "$paragraph</blockquote>\n";
 						$paragraph = '';
@@ -179,12 +178,12 @@
 						$paragraph .= isset($matches[1]) ? "\n{$matches[1]}" : "\n";
 					}
 					elseif (preg_match(LIST_START, $line, $matches)) {
-						$paragraph = block_elements_parser(explode("\n", htmlspecialchars($paragraph)));
+						$paragraph = block_elements_parser($paragraph);
 						$markaround .= "<li>$paragraph</li>\n";
 						$paragraph = $matches[2];
 					}
 					elseif (_is_blank($line)) {
-						$paragraph = block_elements_parser(explode("\n", htmlspecialchars($paragraph)));
+						$paragraph = block_elements_parser($paragraph);
 						$markaround .= "<li>$paragraph</li>";
 						$markaround .= "</$list_type>\n";
 						$markaround .= "\n";
@@ -192,7 +191,7 @@
 						$state = 'PARAGRAPH';
 					}
 					else {
-						$paragraph = block_elements_parser(explode("\n", htmlspecialchars($paragraph)));
+						$paragraph = block_elements_parser($paragraph);
 						$markaround .= "<li>$paragraph</li>";
 						$markaround .= "</$list_type>";
 						$paragraph = '';
@@ -207,12 +206,15 @@
 			$paragraph = span_elements_parser($paragraph);
 			$markaround .= "<p>$paragraph</p>";
 		}
+		if (('CODEBLOCK' == $state) and !empty($paragraph)) {
+			$markaround .= "</code></pre>\n";
+		}
 		elseif (('BLOCKQUOTE' == $state) and !empty($paragraph)) {
-			$paragraph = span_elements_parser($paragraph);
+			$paragraph = block_elements_parser($paragraph);
 			$markaround .= "$paragraph</blockquote>\n";
 		}
 		elseif (('LIST' == $state) and !empty($paragraph)) {
-			$paragraph = block_elements_parser(explode("\n", htmlspecialchars($paragraph)));
+			$paragraph = block_elements_parser($paragraph);
 			$markaround .= "<li>$paragraph</li>";
 			$markaround .= "</$list_type>";
 		}
@@ -319,7 +321,6 @@
 					break;
 				case 'CODE_END_MAYBE':
 					if ("'" == $char) {
-						$token = htmlspecialchars($token);
 						$token = str_replace("\\'", "'", $token);
 						$markaround .= "<code>$token</code>";
 						$token = '';
@@ -336,7 +337,6 @@
 		if (in_array($state, array('EM', 'STRONG', 'DEL', 'CODE'))) {
 			$tag = strtolower($state);
 			if ('code' == $tag) {
-				$token = htmlspecialchars($token);
 				$token = str_replace("\\'", "'", $token);
 			}
 			$markaround .= "<$tag>$token</$tag>";
