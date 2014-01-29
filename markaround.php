@@ -1,7 +1,6 @@
 <?php
 
 // TODO: Links
-// TODO: single line list items shouldn't be wrapped in a <p> tag.
 // TODO: line break (<br />) handling inside blockquotes
 // TODO: handle indented code blocks
 // TODO: trim spaces on newline escape
@@ -93,6 +92,7 @@
 							$state = 'LIST';
 							$list_type = ('*' == $matches[1]) ? 'ul' : 'ol';
 							$markaround .= "<$list_type>";
+							$multiline_list_item = false;
 							break;
 						}
 
@@ -150,15 +150,17 @@
 							$paragraph .= "\n$line";
 						}
 						elseif (preg_match(LIST_CONTINUED, $line, $matches)) {
+							$multiline_list_item = true;
 							$paragraph .= isset($matches[1]) ? "\n{$matches[1]}" : "\n";
 						}
 						elseif (preg_match(LIST_START, $line, $matches)) {
-							$paragraph = block_elements_parser($paragraph);
+							$paragraph = ($multiline_list_item) ? block_elements_parser($paragraph) : $paragraph;
 							$markaround .= "<li>$paragraph</li>\n";
+							$multiline_list_item = false;
 							$paragraph = $matches[2];
 						}
 						elseif (_is_blank($line)) {
-							$paragraph = block_elements_parser($paragraph);
+							$paragraph = ($multiline_list_item) ? block_elements_parser($paragraph) : $paragraph;
 							$markaround .= "<li>$paragraph</li>";
 							$markaround .= "</$list_type>";
 							$markaround .= "\n";
@@ -166,7 +168,7 @@
 							$state = 'PARAGRAPH';
 						}
 						else {
-							$paragraph = block_elements_parser($paragraph);
+							$paragraph = ($multiline_list_item) ? block_elements_parser($paragraph) : $paragraph;
 							$markaround .= "<li>$paragraph</li>";
 							$markaround .= "</$list_type>";
 							$paragraph = '';
