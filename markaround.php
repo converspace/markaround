@@ -70,17 +70,17 @@
 
 							_end_previous_paragraph_($paragraph, $markaround, $first_line);
 							_newline_if_not_first_line_($markaround, $first_line);
-							$state = 'CODEBLOCK';
 							$markaround .= "<pre><code>";
+							$state = 'CODEBLOCK';
 							break;
 						}
 
 						if (preg_match(BLOCKQUOTE, $line, $matches)) {
 							_end_previous_paragraph_($paragraph, $markaround, $first_line);
 							_newline_if_not_first_line_($markaround, $first_line);
-							$paragraph = $matches[1];
-							$state = 'BLOCKQUOTE';
 							$markaround .= "<blockquote>";
+							$state = 'BLOCKQUOTE';
+							$paragraph = $matches[1];
 							break;
 						}
 
@@ -88,10 +88,10 @@
 
 							_end_previous_paragraph_($paragraph, $markaround, $first_line);
 							_newline_if_not_first_line_($markaround, $first_line);
-							$paragraph = $matches[2];
-							$state = 'LIST';
 							$list_type = ('*' == $matches[1]) ? 'ul' : 'ol';
 							$markaround .= "<$list_type>";
+							$state = 'LIST';
+							$paragraph = $matches[2];
 							$multiline_list_item = false;
 							break;
 						}
@@ -182,14 +182,14 @@
 			if (('PARAGRAPH' == $state) and !empty($paragraph)) {
 				_end_previous_paragraph_($paragraph, $markaround, $first_line);
 			}
-			if (('CODEBLOCK' == $state) and !empty($paragraph)) {
+			if (('CODEBLOCK' == $state)) {
 				$markaround .= "</code></pre>";
 			}
-			elseif (('BLOCKQUOTE' == $state) and !empty($paragraph)) {
+			elseif (('BLOCKQUOTE' == $state)) {
 				$paragraph = block_elements_parser($paragraph);
 				$markaround .= "$paragraph</blockquote>";
 			}
-			elseif (('LIST' == $state) and !empty($paragraph)) {
+			elseif (('LIST' == $state)) {
 				$paragraph = block_elements_parser($paragraph);
 				$markaround .= "<li>$paragraph</li>";
 				$markaround .= "</$list_type>";
