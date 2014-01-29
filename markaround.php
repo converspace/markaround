@@ -28,13 +28,13 @@
 		return block_elements_parser($str);
 	}
 
-
 	function block_elements_parser($str) {
 
 		$lines = explode("\n", $str);
 
 		$markaround = '';
 		$paragraph = '';
+		$first_line = true;
 		$state = 'PARAGRAPH';
 
 		foreach($lines as $line) {
@@ -43,63 +43,42 @@
 
 				case 'PARAGRAPH':
 					if (_is_blank($line)) {
-						if (!empty($paragraph)) {
-							$paragraph = span_elements_parser($paragraph);
-							$markaround .= "<p>$paragraph</p>\n";
-						}
-						$markaround .= "\n";
-						$paragraph = '';
+
+						_end_previous_paragraph_($paragraph, $markaround, $first_line);
+						_newline_if_not_first_line_($markaround, $first_line);
 						break;
 					}
 
 					BLOCK_START:
 
 					if (preg_match(HEADER, $line, $matches)) {
-
-						// All block level elements will have this since they end the previous paragraph.
-						if (!empty($paragraph)) {
-							$paragraph = span_elements_parser($paragraph);
-							$markaround .= "<p>$paragraph</p>\n";
-						}
-
+						_end_previous_paragraph_($paragraph, $markaround, $first_line);
+						_newline_if_not_first_line_($markaround, $first_line);
 						$level = strlen($matches[1]);
-						$markaround .= "<h$level>{$matches[2]}</h$level>\n";
-						$paragraph = '';
+						$markaround .= "<h$level>{$matches[2]}</h$level>";
 						break;
 					}
 
 					if (preg_match(HR, $line, $matches)) {
-
-						if (!empty($paragraph)) {
-							$paragraph = span_elements_parser($paragraph);
-							$markaround .= "<p>$paragraph</p>\n";
-						}
-
-						$markaround .= "<hr />\n";
-						$paragraph = '';
+						_end_previous_paragraph_($paragraph, $markaround, $first_line);
+						_newline_if_not_first_line_($markaround, $first_line);
+						$markaround .= "<hr />";
 						break;
 					}
 
 
 					if (preg_match(CODEBLOCK, $line)) {
 
-						if (!empty($paragraph)) {
-							$paragraph = span_elements_parser($paragraph);
-							$markaround .= "<p>$paragraph</p>\n";
-						}
-
-						$paragraph = '';
+						_end_previous_paragraph_($paragraph, $markaround, $first_line);
+						_newline_if_not_first_line_($markaround, $first_line);
 						$state = 'CODEBLOCK';
-						$markaround .= "<pre><code>\n";
+						$markaround .= "<pre><code>";
 						break;
 					}
 
 					if (preg_match(BLOCKQUOTE, $line, $matches)) {
-						if (!empty($paragraph)) {
-							$paragraph = span_elements_parser($paragraph);
-							$markaround .= "<p>$paragraph</p>\n";
-						}
-
+						_end_previous_paragraph_($paragraph, $markaround, $first_line);
+						_newline_if_not_first_line_($markaround, $first_line);
 						$paragraph = $matches[1];
 						$state = 'BLOCKQUOTE';
 						$markaround .= "<blockquote>";
@@ -108,11 +87,8 @@
 
 					if (preg_match(LIST_START, $line, $matches)) {
 
-						if (!empty($paragraph)) {
-							$paragraph = span_elements_parser($paragraph);
-							$markaround .= "<p>$paragraph</p>\n";
-						}
-
+						_end_previous_paragraph_($paragraph, $markaround, $first_line);
+						_newline_if_not_first_line_($markaround, $first_line);
 						$paragraph = $matches[2];
 						$state = 'LIST';
 						$list_type = ('*' == $matches[1]) ? 'ul' : 'ol';
@@ -138,13 +114,13 @@
 
 				case 'CODEBLOCK':
 					if (preg_match(CODEBLOCK, $line)) {
-						$markaround .= "</code></pre>\n";
+						$markaround .= "\n</code></pre>";
 						$state = 'PARAGRAPH';
 					}
 					else {
 						$line = htmlspecialchars($line);
 						$line = str_replace("\\'", "'", $line);
-						$markaround .= "$line\n";
+						$markaround .= "\n$line";
 					}
 					break;
 
@@ -157,8 +133,7 @@
 					}
 					else {
 						$paragraph = block_elements_parser($paragraph);
-						if ("\n" == substr($paragraph, -1)) $paragraph = substr($paragraph, 0, -1);
-						$markaround .= "$paragraph</blockquote>\n";
+						$markaround .= "$paragraph</blockquote>";
 						$paragraph = '';
 						$state = 'PARAGRAPH';
 						if (_is_blank($line)) {
@@ -185,7 +160,7 @@
 					elseif (_is_blank($line)) {
 						$paragraph = block_elements_parser($paragraph);
 						$markaround .= "<li>$paragraph</li>";
-						$markaround .= "</$list_type>\n";
+						$markaround .= "</$list_type>";
 						$markaround .= "\n";
 						$paragraph = '';
 						$state = 'PARAGRAPH';
@@ -203,8 +178,7 @@
 		}
 
 		if (('PARAGRAPH' == $state) and !empty($paragraph)) {
-			$paragraph = span_elements_parser($paragraph);
-			$markaround .= "<p>$paragraph</p>";
+			_end_previous_paragraph_($paragraph, $markaround, $first_line);
 		}
 		if (('CODEBLOCK' == $state) and !empty($paragraph)) {
 			$markaround .= "</code></pre>";
@@ -347,5 +321,21 @@
 
 
 		function _is_blank($str) { return (!trim($str)); }
+
+
+		function _end_previous_paragraph_(&$paragraph, &$markaround, &$first_line) {
+			if (!empty($paragraph)) {
+				$paragraph = span_elements_parser($paragraph);
+				_newline_if_not_first_line_($markaround, $first_line);
+				$markaround .= "<p>$paragraph</p>";
+				$paragraph = '';
+			}
+		}
+
+
+		function _newline_if_not_first_line_(&$markaround, &$first_line) {
+			if (!$first_line) $markaround .= "\n";
+			if ($first_line) $first_line = false;
+		}
 
 ?>

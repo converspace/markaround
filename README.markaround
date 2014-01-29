@@ -8,7 +8,6 @@ Writing in Markaround is half way between using a WYSIWYG editor and hand-coding
 
 The problem with WYSIWYG editors is not so much that you cannot control the HTML it generates as the HTML mess it creates. Markaround's syntax can be unambiguously and unsurprisingly converted to HTML so you always know what HTML will be generated. It's not the same as hand-coding HTML, but it's good enough most of the time.
 
-
 == Syntax
 
 
@@ -141,7 +140,7 @@ HTML:
 
 ==== Code Blocks
 
-Two single quotes on a line by themselves mark the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.
+Two single quotes on a line by themselves marks the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.
 
 Here is some code:
   ''
@@ -152,7 +151,7 @@ Here is some code:
 
 Markaround:
 ''
-Two single quotes on a line by themselves mark the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.
+Two single quotes on a line by themselves marks the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.
 
 Here is some code:
   ''
@@ -164,7 +163,7 @@ Here is some code:
 
 HTML:
 ''
-<p>Two single quotes on a line by themselves mark the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.</p>
+<p>Two single quotes on a line by themselves marks the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.</p>
 
 <p>Here is some code:</p>
 <pre><code>

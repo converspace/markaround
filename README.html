@@ -8,7 +8,6 @@
 
 <p>The problem with WYSIWYG editors is not so much that you cannot control the HTML it generates as the HTML mess it creates. Markaround's syntax can be unambiguously and unsurprisingly converted to HTML so you always know what HTML will be generated. It's not the same as hand-coding HTML, but it's good enough most of the time.</p>
 
-
 <h2>Syntax</h2>
 
 
@@ -141,7 +140,7 @@ A line with one or more hyphens by themselves is converted to ''&lt;hr /&gt;''. 
 
 <h4>Code Blocks</h4>
 
-<p>Two single quotes on a line by themselves mark the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.</p>
+<p>Two single quotes on a line by themselves marks the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.</p>
 
 <p>Here is some code:</p>
 <pre><code>
@@ -152,19 +151,19 @@ A line with one or more hyphens by themselves is converted to ''&lt;hr /&gt;''. 
 
 <p>Markaround:</p>
 <pre><code>
-Two single quotes on a line by themselves mark the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.
+Two single quotes on a line by themselves marks the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.
 
 Here is some code:
-    ''
-    &lt;?php
-      echo &quot;Hello World&quot;;
-    ?&gt;
-    ''
+</code></pre>
+<p>  &lt;?php<br />
+  echo &quot;Hello World&quot;;<br />
+  ?&gt;</p>
+<pre><code>
 </code></pre>
 
 <p>HTML:</p>
 <pre><code>
-&lt;p&gt;Two single quotes on a line by themselves mark the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.&lt;/p&gt;
+&lt;p&gt;Two single quotes on a line by themselves marks the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.&lt;/p&gt;
 
 &lt;p&gt;Here is some code:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
@@ -228,15 +227,13 @@ This is a code block
 <li><p>two</p></li>
 <li><p>three</p></li></ol>
 
-<p>&gt; This is a  blockquote.</p>
+<blockquote><p>This is a  blockquote.</p></blockquote>
 
 <pre><code>
 This is a code block
 </code></pre>
-
 </li>
 <li><p>To wrap list item contents in a &lt;p&gt; tag, leave a blank line after the list item like so</p>
-
 </li></ul>
 
 
