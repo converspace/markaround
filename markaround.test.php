@@ -2,13 +2,28 @@
 
 	function test_block_elements_parser() {
 
-		should_return("\n<hr />\n\n", when_passed(array('', '-', '')));
-		should_return("<hr />\n\n", when_passed(array('-', '')));
+		// Para
+		should_return("<p>Not surrounded by blank lines</p>", when_passed("Not surrounded by blank lines"));
+		should_return("\n<p>Blank line before</p>", when_passed("\nBlank line before"));
+		should_return("\n<p>Surrounded by blank lines</p>\n", when_passed("\nSurrounded by blank lines\n"));
+		should_return("\n<p>Blank line before</p>\n\n<p>Para2</p>", when_passed("\nBlank line before\n\nPara2"));
+		should_return("<p>Para1</p>\n\n<p>Para2</p>", when_passed("Para1\n\nPara2"));
 
-		should_return("<h1>HEADER</h1>\n\n", when_passed(array('HEADER', '-')));
-		should_return("<h1>HEADER</h1>\n\n\n", when_passed(array('HEADER', '-', '')));
-		should_return("<h1>HEADER</h1>\n\n<p>PARA</p>", when_passed(array('HEADER', '-', 'PARA')));
-		should_return("<h1>HEADER<br />\nCONTINUED</h1>\n\n<p>PARA</p>", when_passed(array('HEADER', 'CONTINUED', '-', 'PARA')));
+		should_return("<h1>Header</h1>", when_passed("= Header"));
+		should_return("<h1>Header</h1>\n<p>Paragraph</p>", when_passed("= Header\nParagraph"));
+
+
+		should_return('<hr />', when_passed("-"));
+
+		should_return("<p>para1</p>\n<ul><li><p>list item 1</p></li></ul>", when_passed("para1\n* list item 1"));
+
+		// HTML escaping tests
+		should_return("<p>&lt;strong&gt;Hello&lt;/strong&gt; World</p>", when_passed("<strong>Hello</strong> World"));
+		should_return("<blockquote><p>&lt;strong&gt;Hello&lt;/strong&gt; World</p></blockquote>", when_passed("> <strong>Hello</strong> World"));
+		should_return("<pre><code>\n&lt;strong&gt;Hello&lt;/strong&gt; World\n</code></pre>", when_passed("''\n<strong>Hello</strong> World\n''"));
+
+		should_return("<pre><code>\n&lt;strong&gt;Hello&lt;/strong&gt; World\n</code></pre>\n<p>Foobar</p>", when_passed("''\n<strong>Hello</strong> World\n''\nFoobar"));
+
 	}
 
 	function test_span_elements_parser() {
