@@ -26,7 +26,7 @@
 
 	}
 
-	function test_span_elements_parser() {
+	function test__span_elements_parser() {
 
 		should_return('<strong>bold</strong>', when_passed('*bold*'));
 		should_return('<strong>bold</strong> ', when_passed('*bold* '));
