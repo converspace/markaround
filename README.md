@@ -1,7 +1,7 @@
 
 # Markaround
 
-Markaround is a shorthand replacement for the most commonly used subset of HTML used for writing on the web.
+Markaround is a shorthand replacement for the most commonly used subset of HTML for writing on the web.
 
 Writing in Markaround is half way between using a WYSIWYG editor and hand-coding HTML.
 

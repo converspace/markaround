@@ -2,7 +2,7 @@
 
 = Markaround
 
-Markaround is a shorthand replacement for the most commonly used subset of HTML used for writing on the web.
+Markaround is a shorthand replacement for the most commonly used subset of HTML for writing on the web.
 
 Writing in Markaround is half way between using a WYSIWYG editor and hand-coding HTML.
 
@@ -154,11 +154,11 @@ Markaround:
 Two single quotes on a line by themselves marks the start and end of a clode block. If they are indented, then every line in the contained text is stripped of the same number of spaces and/or tabs.
 
 Here is some code:
-  ''
+  \'\'
   <?php
   echo "Hello World";
   ?>
-  ''
+  \'\'
 ''
 
 HTML:
