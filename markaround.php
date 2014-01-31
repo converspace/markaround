@@ -201,7 +201,7 @@
 
 			function _end_previous_paragraph_(&$paragraph, &$markaround, &$first_line) {
 				if (!empty($paragraph)) {
-					$paragraph = span_elements_parser($paragraph);
+					$paragraph = _span_elements_parser($paragraph);
 					_newline_if_not_first_line_($markaround, $first_line);
 					$markaround .= "<p>$paragraph</p>";
 					$paragraph = '';
@@ -215,7 +215,7 @@
 			}
 
 
-			function span_elements_parser($str) {
+			function _span_elements_parser($str) {
 				$markaround = '';
 				$token = '';
 				$last_state = '';
@@ -283,7 +283,7 @@
 						case 'EM':
 							if (!preg_match(WORD_CHAR, $char)) {
 								$token = substr($token, 1, -1);
-								$token = span_elements_parser($token);
+								$token = _span_elements_parser($token);
 								$markaround .= "<em>$token</em>";
 								$markaround .= $char;
 								$token = '';
@@ -308,7 +308,7 @@
 						case 'STRONG':
 							if (!preg_match(WORD_CHAR, $char)) {
 								$token = substr($token, 1, -1);
-								$token = span_elements_parser($token);
+								$token = _span_elements_parser($token);
 								$markaround .= "<strong>$token</strong>";
 								$markaround .= $char;
 								$token = '';
@@ -332,7 +332,7 @@
 						case 'DEL':
 							if (!preg_match(WORD_CHAR, $char)) {
 								$token = substr($token, 1, -1);
-								$token = span_elements_parser($token);
+								$token = _span_elements_parser($token);
 								$markaround .= "<del>$token</del>";
 								$markaround .= $char;
 								$token = '';
@@ -403,7 +403,7 @@
 					}
 					else {
 						$token = substr($token, 1, -1);
-						$token = span_elements_parser($token);
+						$token = _span_elements_parser($token);
 					}
 					$markaround .= "<$tag>$token</$tag>";
 				}
