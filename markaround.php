@@ -1,10 +1,9 @@
 <?php
 
 // TODO: Links
-// TODO: line break (<br />) handling inside blockquotes
+// TODO: line break (<br />) handling inside blockquotes and lists
 // TODO: handle indented code blocks
 // TODO: trim spaces on newline escape
-// TODO: Nested span elements like  *_bold italics_*
 // TODO: generate header id
 // TODO: header attributes {#level4 .class1 .class2}
 // TODO: code block attributes {#example1 .php} => <pre id="example1" class="php">
@@ -12,29 +11,30 @@
 // TODO: ad hoc span elements
 
 
-	define('HEADER',         '/^(=+)\s+(.+)$/');
+	define('HEADER',         '/^(={1,6})\s+(.+)$/');
 	define('CODEBLOCK',      '/^\s*\'\'\s*$/');
 	define('LIST_START',     '/^([*#])\s(.+)$/');
 	define('LIST_CONTINUED', '/^\|\s*(.*)$/');
 	define('BLOCKQUOTE',     '/^\s*[>]\s*(.*)$/');
 	define('HR',             '/^-+\s*$/');
+	define('WORD_CHAR',  '/[A-Za-z0-9\-_*]/');
 
 
 	function markaround($str) {
 		$str = str_replace("\r\n", "\n", $str);
 		$str = str_replace("\r", "\n", $str);
 		$str = str_replace("\t", str_repeat(' ', 4), $str);
-		return block_elements_parser($str);
+		return _block_elements_parser($str);
 	}
 
-		function block_elements_parser($str) {
+		function _block_elements_parser($str) {
 
 			$lines = explode("\n", $str);
 
 			$markaround = '';
 			$paragraph = '';
-			$first_line = true;
 			$state = 'PARAGRAPH';
+			$first_line = true;
 
 			foreach($lines as $line) {
 
@@ -54,7 +54,8 @@
 							_end_previous_paragraph_($paragraph, $markaround, $first_line);
 							_newline_if_not_first_line_($markaround, $first_line);
 							$level = strlen($matches[1]);
-							$markaround .= "<h$level>{$matches[2]}</h$level>";
+							$header = htmlspecialchars($matches[2]);
+							$markaround .= "<h$level>$header</h$level>";
 							break;
 						}
 
@@ -96,19 +97,15 @@
 							break;
 						}
 
-						$line = htmlspecialchars($line);
 
+						$line = htmlspecialchars($line);
 						if (empty($paragraph)) {
 							$paragraph = $line;
-							break;
 						}
-
-						if ('\\' == substr($paragraph, -1)) {
+						elseif ('\\' == substr($paragraph, -1)) {
 							$paragraph = substr($paragraph, 0, -1)."\n$line";
-							break;
 						}
-
-						$paragraph .= "<br />\n$line";
+						else $paragraph .= "<br />\n$line";
 						break;
 
 
@@ -132,7 +129,7 @@
 							$paragraph .= "\n{$matches[1]}";
 						}
 						else {
-							$paragraph = block_elements_parser($paragraph);
+							$paragraph = _block_elements_parser($paragraph);
 							$markaround .= "$paragraph</blockquote>";
 							$paragraph = '';
 							$state = 'PARAGRAPH';
@@ -154,13 +151,13 @@
 							$paragraph .= isset($matches[1]) ? "\n{$matches[1]}" : "\n";
 						}
 						elseif (preg_match(LIST_START, $line, $matches)) {
-							$paragraph = ($multiline_list_item) ? block_elements_parser($paragraph) : $paragraph;
+							$paragraph = ($multiline_list_item) ? _block_elements_parser($paragraph) : $paragraph;
 							$markaround .= "<li>$paragraph</li>\n";
 							$multiline_list_item = false;
 							$paragraph = $matches[2];
 						}
 						elseif (_is_blank($line)) {
-							$paragraph = ($multiline_list_item) ? block_elements_parser($paragraph) : $paragraph;
+							$paragraph = ($multiline_list_item) ? _block_elements_parser($paragraph) : $paragraph;
 							$markaround .= "<li>$paragraph</li>";
 							$markaround .= "</$list_type>";
 							$markaround .= "\n";
@@ -168,7 +165,7 @@
 							$state = 'PARAGRAPH';
 						}
 						else {
-							$paragraph = ($multiline_list_item) ? block_elements_parser($paragraph) : $paragraph;
+							$paragraph = ($multiline_list_item) ? _block_elements_parser($paragraph) : $paragraph;
 							$markaround .= "<li>$paragraph</li>";
 							$markaround .= "</$list_type>";
 							$paragraph = '';
@@ -186,11 +183,11 @@
 				$markaround .= "</code></pre>";
 			}
 			elseif (('BLOCKQUOTE' == $state)) {
-				$paragraph = block_elements_parser($paragraph);
+				$paragraph = _block_elements_parser($paragraph);
 				$markaround .= "$paragraph</blockquote>";
 			}
 			elseif (('LIST' == $state)) {
-				$paragraph = block_elements_parser($paragraph);
+				$paragraph = _block_elements_parser($paragraph);
 				$markaround .= "<li>$paragraph</li>";
 				$markaround .= "</$list_type>";
 			}
@@ -219,123 +216,198 @@
 
 
 			function span_elements_parser($str) {
-
 				$markaround = '';
 				$token = '';
-				$stack = array();
 				$last_state = '';
-				$state = 'START';
+				$state = 'NOT_IN_WORD';
 
 				foreach (str_split($str) as $char) {
 					switch ($state) {
-						case 'START':
-							$previous_char = array_pop($stack);
-							if (is_null($previous_char)) $previous_char = ' ';
-							$non_word_char_regex = '/[^A-Za-z0-9\-_]/';
+
+						case 'NOT_IN_WORD':
 
 							if ('\\' == $char) {
 								$state = 'ESCAPE';
-								$last_state = 'START';
+								$last_state = 'IN_WORD';
+								break;
 							}
-							elseif (('_' == $char) and preg_match($non_word_char_regex, $previous_char)) {
-								$state = 'EM';
+
+							if ('_' == $char) {
+								$token = $char;
+								$state = 'EM_MAYBE';
 							}
-							elseif (('*' == $char) and preg_match($non_word_char_regex, $previous_char)) {
-								$state = 'STRONG';
+							elseif ('*' == $char) {
+								$token = $char;
+								$state = 'STRONG_MAYBE';
 							}
-							elseif (('-' == $char) and preg_match($non_word_char_regex, $previous_char)) {
-								$state = 'DEL';
+							elseif ('-' == $char) {
+								$token = $char;
+								$state = 'DEL_MAYBE';
 							}
-							elseif (("'" == $char) and preg_match($non_word_char_regex, $previous_char)) {
+							elseif ("'" == $char) {
+								$token = $char;
 								$state = 'CODE_START_MAYBE';
+							}
+							elseif (preg_match(WORD_CHAR, $char)) {
+								$markaround .= $char;
+								$state = 'IN_WORD';
 							}
 							else {
 								$markaround .= $char;
 							}
-							array_push($stack, $char);
 							break;
-						case 'ESCAPE':
-							if ('START' == $last_state) $markaround .= $char;
-							else $token .= $char;
-							$state = $last_state;
+
+						case 'IN_WORD':
+
+							if ('\\' == $char) {
+								$state = 'ESCAPE';
+								$last_state = 'IN_WORD';
+								break;
+							}
+
+							if (!preg_match(WORD_CHAR, $char)) {
+								$state = 'NOT_IN_WORD';
+							}
+							$markaround .= $char;
+							break;
+
+						case 'EM_MAYBE':
+							$token .= $char;
+							if ('\\' == $char) {
+								$state = 'ESCAPE';
+								$last_state = 'EM_MAYBE';
+								break;
+							}
+							if ('_' == $char) $state = 'EM';
 							break;
 						case 'EM':
-							if ('_' == $char) {
+							if (!preg_match(WORD_CHAR, $char)) {
+								$token = substr($token, 1, -1);
+								$token = span_elements_parser($token);
 								$markaround .= "<em>$token</em>";
+								$markaround .= $char;
 								$token = '';
-								$state = 'START';
+								$state = 'NOT_IN_WORD';
 							}
-							elseif ('\\' == $char) {
+							else {
+								$token .= $char;
+								$state = 'EM_MAYBE';
+
+							}
+							break;
+
+						case 'STRONG_MAYBE':
+							$token .= $char;
+							if ('\\' == $char) {
 								$state = 'ESCAPE';
-								$last_state = 'EM';
+								$last_state = 'STRONG_MAYBE';
+								break;
 							}
-							else $token .= $char;
+							if ('*' == $char) $state = 'STRONG';
 							break;
 						case 'STRONG':
-							if ('*' == $char) {
+							if (!preg_match(WORD_CHAR, $char)) {
+								$token = substr($token, 1, -1);
+								$token = span_elements_parser($token);
 								$markaround .= "<strong>$token</strong>";
+								$markaround .= $char;
 								$token = '';
-								$state = 'START';
+								$state = 'NOT_IN_WORD';
 							}
-							elseif ('\\' == $char) {
+							else {
+								$token .= $char;
+								$state = 'STRONG_MAYBE';
+							}
+							break;
+
+						case 'DEL_MAYBE':
+							$token .= $char;
+							if ('\\' == $char) {
 								$state = 'ESCAPE';
-								$last_state = 'STRONG';
+								$last_state = 'DEL_MAYBE';
+								break;
 							}
-							else $token .= $char;
+							if ('-' == $char) $state = 'DEL';
 							break;
 						case 'DEL':
-							if ('-' == $char) {
+							if (!preg_match(WORD_CHAR, $char)) {
+								$token = substr($token, 1, -1);
+								$token = span_elements_parser($token);
 								$markaround .= "<del>$token</del>";
+								$markaround .= $char;
 								$token = '';
-								$state = 'START';
+								$state = 'NOT_IN_WORD';
 							}
-							elseif ('\\' == $char) {
-								$state = 'ESCAPE';
-								$last_state = 'DEL';
+							else {
+								$token .= $char;
+								$state = 'DEL_MAYBE';
 							}
-							else $token .= $char;
 							break;
+
 						case 'CODE_START_MAYBE':
 							if ("'" == $char) {
-								$state = 'CODE';
+								$state = 'CODE_MAYBE';
+								$token .= $char;
+							}
+							elseif (preg_match(WORD_CHAR, $char)) {
+								$markaround .= $char;
+								$state = 'IN_WORD';
 							}
 							else {
-								$state = 'START';
-								$markaround .= "'".$char;
+								$markaround .= $char;
+								$state = 'NOT_IN_WORD';
 							}
 							break;
-						case 'CODE':
-							if ("'" == $char) {
-								$state = 'CODE_END_MAYBE';
-							}
-							elseif ('\\' == $char) {
+						case 'CODE_MAYBE':
+							if ('\\' == $char) {
 								$state = 'ESCAPE';
-								$last_state = 'CODE';
+								$last_state = 'CODE_MAYBE';
+								break;
 							}
-							else $token .= $char;
+							$token .= $char;
+							if ("'" == $char) $state = 'CODE_END_MAYBE';
 							break;
 						case 'CODE_END_MAYBE':
-							if ("'" == $char) {
-								$token = str_replace("\\'", "'", $token);
+							$token .= $char;
+							if ("'" == $char) $state = 'CODE';
+							else $state = 'CODE_MAYBE';
+							break;
+						case 'CODE':
+							if (!preg_match(WORD_CHAR, $char)) {
+								$token = substr($token, 2, -2);
 								$markaround .= "<code>$token</code>";
+								$markaround .= $char;
 								$token = '';
-								$state = 'START';
+								$state = 'NOT_IN_WORD';
 							}
 							else {
-								$state = 'CODE';
-								$token .= "'".$char;
+								$markaround .= $token;
+								$markaround .= $char;
+								$token = '';
+								$state = 'IN_WORD';
 							}
+							break;
+
+						case 'ESCAPE':
+							if (('NOT_IN_WORD' == $last_state) or ('IN_WORD' == $last_state)) $markaround .= $char;
+							else $token .= $char;
+							$state = $last_state;
 							break;
 					}
 				}
 
 				if (in_array($state, array('EM', 'STRONG', 'DEL', 'CODE'))) {
 					$tag = strtolower($state);
-					if ('code' == $tag) {
-						$token = str_replace("\\'", "'", $token);
+					if ('CODE' == $state) {
+						$token = substr($token, 2, -2);
+					}
+					else {
+						$token = substr($token, 1, -1);
+						$token = span_elements_parser($token);
 					}
 					$markaround .= "<$tag>$token</$tag>";
 				}
+				else $markaround .= $token;
 
 				return $markaround;
 			}
