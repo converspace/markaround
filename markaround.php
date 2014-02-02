@@ -133,12 +133,8 @@
 							$markaround .= "$paragraph</blockquote>";
 							$paragraph = '';
 							$state = 'PARAGRAPH';
-							if (_is_blank($line)) {
-								$markaround .= "\n";
-							}
-							else {
-								goto BLOCK_START;
-							}
+							if (_is_blank($line)) $markaround .= "\n";
+							else goto BLOCK_START;
 						}
 						break;
 
@@ -156,21 +152,14 @@
 							$multiline_list_item = false;
 							$paragraph = $matches[2];
 						}
-						elseif (_is_blank($line)) {
-							$paragraph = ($multiline_list_item) ? _block_elements_parser($paragraph) : $paragraph;
-							$markaround .= "<li>$paragraph</li>";
-							$markaround .= "</$list_type>";
-							$markaround .= "\n";
-							$paragraph = '';
-							$state = 'PARAGRAPH';
-						}
 						else {
 							$paragraph = ($multiline_list_item) ? _block_elements_parser($paragraph) : $paragraph;
 							$markaround .= "<li>$paragraph</li>";
 							$markaround .= "</$list_type>";
 							$paragraph = '';
 							$state = 'PARAGRAPH';
-							goto BLOCK_START;
+							if (_is_blank($line)) $markaround .= "\n";
+							else goto BLOCK_START;
 						}
 						break;
 				}
